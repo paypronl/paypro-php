@@ -1,0 +1,14 @@
+.DS_Store
+
+# Ignore composer files
+/vendor
+composer.phar
+composer.lock
+
+# Ignore PHP CS fixer cache and local config files
+.php_cs
+.php_cs.cache
+.php-cs-fixer.cache
+
+# Ignore PHP unit cache
+.phpunit.result.cache

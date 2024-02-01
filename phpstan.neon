@@ -1,0 +1,10 @@
+parameters:
+    level: 4
+    paths:
+        - %currentWorkingDirectory%/src
+        - %currentWorkingDirectory%/tests
+    excludePaths:
+        - %currentWorkingDirectory%/vendor
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\).#'
+    treatPhpDocTypesAsCertain: false

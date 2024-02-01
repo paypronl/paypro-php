@@ -70,9 +70,6 @@ trait TestHelper
                 $headers === null ? $this->anything() : $this->callback(function ($array) use ($headers) {
                     foreach ($headers as $header) {
                         if (!\in_array($header, $array, true)) {
-                            var_dump($array);
-                            var_dump($header);
-
                             return false;
                         }
                     }

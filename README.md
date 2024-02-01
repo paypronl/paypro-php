@@ -88,5 +88,5 @@ To run the [code formatter](https://cs.symfony.com/):
 To analyze the code with [PHPStan](https://phpstan.org/)
 
 ```sh
-bin/console
+./vendor/bin/phpstan analyse lib
 ```

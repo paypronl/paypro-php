@@ -16,7 +16,9 @@ abstract class Util
     {
         $parts = \explode('_', $type);
 
-        $className = \implode(\array_map(fn ($part) => \ucfirst(\strtolower($part)), $parts));
+        $className = \implode(\array_map(function($part) {
+            return \ucfirst(\strtolower($part));
+        }, $parts));
 
         // List is a reserved keyword so change to Collection
         if ($className === 'List') {
@@ -69,7 +71,9 @@ abstract class Util
     public static function toEntity($data, $client, $params = [])
     {
         if (self::isList($data)) {
-            return array_map(fn ($i) => self::toEntity($i, $client), $data);
+            return array_map(function($i) use ($client) {
+                return self::toEntity($i, $client);
+            }, $data);
         } elseif (\is_array($data)) {
             if (\array_key_exists('type', $data)) {
                 $entityClass = self::entityClass($data['type']);

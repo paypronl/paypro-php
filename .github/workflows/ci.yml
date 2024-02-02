@@ -22,7 +22,7 @@ jobs:
           php-version: 8.3
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress -no-interaction
+        run: composer install --prefer-dist --no-progress
 
       - name: Run phpstan
         run: ./vendor/bin/phpstan --no-progress analyse lib tests

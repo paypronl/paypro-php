@@ -60,7 +60,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress -no-interaction
+        run: composer install --prefer-dist --no-progress
 
       - name: Run tests
         run: vendor/bin/phpunit --verbose

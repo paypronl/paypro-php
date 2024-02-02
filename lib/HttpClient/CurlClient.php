@@ -29,14 +29,14 @@ class CurlClient implements HttpClientInterface
      */
     public function request($method, $url, $params, $headers, $body)
     {
-        $this->curlHandle = \curl_init();
+        $this->curlHandle = curl_init();
 
         $curlOpts = [];
         $responseHeaders = [];
 
         switch ($method) {
             case 'get':
-                $curlOpts[\CURLOPT_HTTPGET] = 1;
+                $curlOpts[CURLOPT_HTTPGET] = 1;
 
                 if (\count($params) > 0) {
                     $encodedParameters = Util::encodeParameters($params);
@@ -46,19 +46,19 @@ class CurlClient implements HttpClientInterface
                 break;
 
             case 'post':
-                $curlOpts[\CURLOPT_POST] = 1;
-                $curlOpts[\CURLOPT_POSTFIELDS] = $body;
+                $curlOpts[CURLOPT_POST] = 1;
+                $curlOpts[CURLOPT_POSTFIELDS] = $body;
 
                 break;
 
             case 'delete':
-                $curlOpts[\CURLOPT_CUSTOMREQUEST] = 'DELETE';
+                $curlOpts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
 
                 break;
 
             case 'patch':
-                $curlOpts[\CURLOPT_CUSTOMREQUEST] = 'PATCH';
-                $curlOpts[\CURLOPT_POSTFIELDS] = $body;
+                $curlOpts[CURLOPT_CUSTOMREQUEST] = 'PATCH';
+                $curlOpts[CURLOPT_POSTFIELDS] = $body;
 
                 break;
 
@@ -66,29 +66,29 @@ class CurlClient implements HttpClientInterface
                 throw new InvalidArgumentException("Unknown method given {$method}");
         }
 
-        $curlOpts[\CURLOPT_URL] = $url;
-        $curlOpts[\CURLOPT_RETURNTRANSFER] = true;
-        $curlOpts[\CURLOPT_HTTPHEADER] = $this->rawHeaders($headers);
-        $curlOpts[\CURLOPT_CAINFO] = PayPro::getCaBundlePath();
-        $curlOpts[\CURLOPT_CONNECTTIMEOUT] = PayPro::getTimeout();
+        $curlOpts[CURLOPT_URL] = $url;
+        $curlOpts[CURLOPT_RETURNTRANSFER] = true;
+        $curlOpts[CURLOPT_HTTPHEADER] = $this->rawHeaders($headers);
+        $curlOpts[CURLOPT_CAINFO] = PayPro::getCaBundlePath();
+        $curlOpts[CURLOPT_CONNECTTIMEOUT] = PayPro::getTimeout();
 
-        $curlOpts[\CURLOPT_HEADERFUNCTION] = function ($curl, $line) use (&$responseHeaders) {
+        $curlOpts[CURLOPT_HEADERFUNCTION] = static function ($curl, $line) use (&$responseHeaders) {
             return CurlClient::parseHeaderLines($line, $responseHeaders);
         };
 
         if (!PayPro::getVerifySslCertificates()) {
-            $curlOpts[\CURLOPT_SSL_VERIFYPEER] = false;
+            $curlOpts[CURLOPT_SSL_VERIFYPEER] = false;
         }
 
-        \curl_setopt_array($this->curlHandle, $curlOpts);
+        curl_setopt_array($this->curlHandle, $curlOpts);
 
-        $responseBody = \curl_exec($this->curlHandle);
+        $responseBody = curl_exec($this->curlHandle);
 
         if (false === $responseBody) {
-            $this->handleError(\curl_errno($this->curlHandle), \curl_error($this->curlHandle));
+            $this->handleError(curl_errno($this->curlHandle), curl_error($this->curlHandle));
         }
 
-        $responseCode = \curl_getinfo($this->curlHandle, \CURLINFO_HTTP_CODE);
+        $responseCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
 
         $this->closeCurlHandle();
 
@@ -106,15 +106,15 @@ class CurlClient implements HttpClientInterface
     private function handleError($errorCode, $errorMessage)
     {
         switch ($errorCode) {
-            case \CURLE_COULDNT_CONNECT:
-            case \CURLE_COULDNT_RESOLVE_HOST:
-            case \CURLE_OPERATION_TIMEOUTED:
+            case CURLE_COULDNT_CONNECT:
+            case CURLE_COULDNT_RESOLVE_HOST:
+            case CURLE_OPERATION_TIMEOUTED:
                 $message = 'Failed to make a connection to the PayPro API. ' .
                            'This could indicate a DNS issue or because you have no internet connection.';
 
                 // no break
-            case \CURLE_SSL_CACERT:
-            case \CURLE_SSL_PEER_CERTIFICATE:
+            case CURLE_SSL_CACERT:
+            case CURLE_SSL_PEER_CERTIFICATE:
                 $message = 'Failed to create a secure connection with the PayPro API. ' .
                            'Please make sure https://api.paypro.nl certificate is accepted in your ' .
                            'network.';
@@ -151,16 +151,17 @@ class CurlClient implements HttpClientInterface
      * Used in the callback for parsing Curl headers.
      *
      * @param array &$headers
+     * @param mixed $line
      *
      * @return int
      */
     private static function parseHeaderLines($line, &$headers)
     {
-        if (false === \strpos($line, ':')) {
+        if (false === strpos($line, ':')) {
             return \strlen($line);
         }
-        list($key, $value) = \explode(':', \trim($line), 2);
-        $headers[\trim($key)] = \trim($value);
+        list($key, $value) = explode(':', trim($line), 2);
+        $headers[trim($key)] = trim($value);
 
         return \strlen($line);
     }
@@ -171,7 +172,7 @@ class CurlClient implements HttpClientInterface
     private function closeCurlHandle()
     {
         if (null !== $this->curlHandle) {
-            \curl_close($this->curlHandle);
+            curl_close($this->curlHandle);
             $this->curlHandle = null;
         }
     }

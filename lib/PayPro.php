@@ -118,7 +118,7 @@ class PayPro
      */
     public static function getVersion()
     {
-        return PayPro::VERSION;
+        return self::VERSION;
     }
 
     /**
@@ -128,6 +128,6 @@ class PayPro
      */
     private static function getDefaultCaBundlePath()
     {
-        return \realpath(__DIR__ . '/../data/cacert.pem');
+        return realpath(__DIR__ . '/../data/cacert.pem');
     }
 }

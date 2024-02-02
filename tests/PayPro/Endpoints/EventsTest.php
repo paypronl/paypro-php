@@ -28,8 +28,8 @@ final class EventsTest extends TestCase
         $endpoint = new Events($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(Event::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(Event::class, $list->first());
     }
 
     public function testIsGettable()
@@ -48,9 +48,9 @@ final class EventsTest extends TestCase
         $endpoint = new Events($this->apiClient);
         $event = $endpoint->get('EVYK7KCFJAXA23UKSG');
 
-        $this->assertInstanceOf(Event::class, $event);
-        $this->assertSame($event->id, 'EVYK7KCFJAXA23UKSG');
-        $this->assertSame($event->event_type, 'payment.created');
-        $this->assertInstanceOf(Payment::class, $event->payload);
+        self::assertInstanceOf(Event::class, $event);
+        self::assertSame($event->id, 'EVYK7KCFJAXA23UKSG');
+        self::assertSame($event->event_type, 'payment.created');
+        self::assertInstanceOf(Payment::class, $event->payload);
     }
 }

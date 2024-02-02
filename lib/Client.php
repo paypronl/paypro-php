@@ -71,7 +71,7 @@ class Client
             throw new InvalidArgumentException('$config must be a string or array');
         }
 
-        $config = \array_merge(self::DEFAULT_CONFIG, $config);
+        $config = array_merge(self::DEFAULT_CONFIG, $config);
         $this->validateConfig($config);
 
         $this->apiClient = new ApiClient($config['api_key'], $config['api_url']);
@@ -109,7 +109,7 @@ class Client
             throw new InvalidArgumentException('api_key cannot be an empty string');
         }
 
-        if (null !== $config['api_key'] && \preg_match('/\s/', $config['api_key'])) {
+        if (null !== $config['api_key'] && preg_match('/\s/', $config['api_key'])) {
             throw new InvalidArgumentException('api_key cannot contain whitespaces');
         }
     }

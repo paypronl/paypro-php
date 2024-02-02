@@ -141,7 +141,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
             return null;
         }
 
-        return \parse_url($this->nextLink());
+        return parse_url($this->nextLink());
     }
 
     /**
@@ -154,7 +154,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
         if (null === $this->nextUri()) {
             return null;
         }
-        \parse_str($this->nextUri()['query'], $output);
+        parse_str($this->nextUri()['query'], $output);
 
         return $output['cursor'];
     }
@@ -184,7 +184,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
             return null;
         }
 
-        return \parse_url($this->previousLink());
+        return parse_url($this->previousLink());
     }
 
     /**
@@ -197,7 +197,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
         if (null === $this->previousUri()) {
             return null;
         }
-        \parse_str($this->previousUri()['query'], $output);
+        parse_str($this->previousUri()['query'], $output);
 
         return $output['cursor'];
     }

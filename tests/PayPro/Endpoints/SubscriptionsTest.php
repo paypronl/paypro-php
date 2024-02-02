@@ -27,8 +27,8 @@ final class SubscriptionsTest extends TestCase
         $endpoint = new Subscriptions($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(Subscription::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(Subscription::class, $list->first());
     }
 
     public function testIsGettable()
@@ -47,10 +47,10 @@ final class SubscriptionsTest extends TestCase
         $endpoint = new Subscriptions($this->apiClient);
         $subscription = $endpoint->get('PS8PTGUPZTSLBP');
 
-        $this->assertInstanceOf(Subscription::class, $subscription);
-        $this->assertSame($subscription->id, 'PS8PTGUPZTSLBP');
-        $this->assertSame($subscription->description, 'Unlimited Subscription');
-        $this->assertSame($subscription->period, ['amount' => 2500, 'interval' => 'month', 'multiplier' => 1, 'vat' => 21.0]);
+        self::assertInstanceOf(Subscription::class, $subscription);
+        self::assertSame($subscription->id, 'PS8PTGUPZTSLBP');
+        self::assertSame($subscription->description, 'Unlimited Subscription');
+        self::assertSame($subscription->period, ['amount' => 2500, 'interval' => 'month', 'multiplier' => 1, 'vat' => 21.0]);
     }
 
     public function testIsCreatable()
@@ -70,6 +70,6 @@ final class SubscriptionsTest extends TestCase
         $endpoint = new Subscriptions($this->apiClient);
         $subscription = $endpoint->create(['description' => 'Unlimited Subscription']);
 
-        $this->assertInstanceOf(Subscription::class, $subscription);
+        self::assertInstanceOf(Subscription::class, $subscription);
     }
 }

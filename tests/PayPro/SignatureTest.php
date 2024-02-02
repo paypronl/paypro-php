@@ -44,7 +44,7 @@ final class SignatureTest extends TestCase
         $signatureObject = new Signature('', 1702298964, 'secret');
         $signature = $signatureObject->generateSignature();
 
-        $this->assertSame($signature, '11a78a4daf3d96996a022be567e444b72bf5f7462311529f0342e0f152d32803');
+        self::assertSame($signature, '11a78a4daf3d96996a022be567e444b72bf5f7462311529f0342e0f152d32803');
 
         $signatureObject = new Signature(
             '{"id": "EVYK7KCFJAXA23UKSG"}',
@@ -54,7 +54,7 @@ final class SignatureTest extends TestCase
 
         $signature = $signatureObject->generateSignature();
 
-        $this->assertSame($signature, '9dfc94dfd152e5c428a5b72c27bbbada0c2d81c266b62ab93ab7087aa773729b');
+        self::assertSame($signature, '9dfc94dfd152e5c428a5b72c27bbbada0c2d81c266b62ab93ab7087aa773729b');
     }
 
     public function testVerifyWithInvalidSignature()
@@ -80,7 +80,7 @@ final class SignatureTest extends TestCase
         $this->expectException(SignatureVerificationException::class);
         $this->expectExceptionMessage('Timestamp is outside the tolerance zone');
 
-        $timestamp = \time() - 60;
+        $timestamp = time() - 60;
 
         $signatureObject = new Signature('', $timestamp, 'secret', 30);
         $signature = $signatureObject->generateSignature();
@@ -93,7 +93,7 @@ final class SignatureTest extends TestCase
         $this->expectException(SignatureVerificationException::class);
         $this->expectExceptionMessage('Timestamp is outside the tolerance zone');
 
-        $timestamp = \time() + 60;
+        $timestamp = time() + 60;
 
         $signatureObject = new Signature('', $timestamp, 'secret', 30);
         $signature = $signatureObject->generateSignature();
@@ -104,6 +104,6 @@ final class SignatureTest extends TestCase
     public function testVerifySignature()
     {
         $signatureObject = new Signature('', 1702298964, 'secret', 100000000000);
-        $this->assertTrue($signatureObject->verify('11a78a4daf3d96996a022be567e444b72bf5f7462311529f0342e0f152d32803'));
+        self::assertTrue($signatureObject->verify('11a78a4daf3d96996a022be567e444b72bf5f7462311529f0342e0f152d32803'));
     }
 }

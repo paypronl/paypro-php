@@ -13,7 +13,7 @@ trait TestHelper
     /** @before */
     protected function setUpCase()
     {
-        $this->baseFixturePath = \realpath(__DIR__ . '/fixtures/');
+        $this->baseFixturePath = realpath(__DIR__ . '/fixtures/');
         $this->httpClientMock = $this->createMock('\PayPro\HttpClient\HttpClientInterface');
         $this->apiClient = new ApiClient('api_key');
     }
@@ -65,10 +65,10 @@ trait TestHelper
             ->expects($this->once())
             ->method('request')
             ->with(
-                $this->identicalTo(\strtolower($method)),
+                $this->identicalTo(strtolower($method)),
                 $this->identicalTo($url),
                 null === $params ? $this->anything() : $this->identicalTo($params),
-                null === $headers ? $this->anything() : $this->callback(function ($array) use ($headers) {
+                null === $headers ? $this->anything() : $this->callback(static function ($array) use ($headers) {
                     foreach ($headers as $header) {
                         if (!\in_array($header, $array, true)) {
                             return false;
@@ -77,7 +77,7 @@ trait TestHelper
 
                     return true;
                 }),
-                null === $body ? $this->anything() : $this->identicalTo(\json_encode($body))
+                null === $body ? $this->anything() : $this->identicalTo(json_encode($body))
             )
             ->willReturn([$response, $code, $responseHeaders])
         ;

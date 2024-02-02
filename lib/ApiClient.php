@@ -162,7 +162,7 @@ class ApiClient
      */
     private function userAgent()
     {
-        return 'PayPro ' . PayPro::getVersion() . ' / PHP ' . PHP_VERSION_ID . ' / OpenSSL ' . OPENSSL_VERSION_NUMBER;
+        return 'PayPro ' . PayPro::getVersion() . ' / PHP ' . \PHP_VERSION_ID . ' / OpenSSL ' . OPENSSL_VERSION_NUMBER;
     }
 
     /**

@@ -16,10 +16,10 @@ abstract class Util
      */
     public static function entityClass($type)
     {
-        $parts = \explode('_', $type);
+        $parts = explode('_', $type);
 
-        $className = \implode(\array_map(function ($part) {
-            return \ucfirst(\strtolower($part));
+        $className = implode('', array_map(static function ($part) {
+            return ucfirst(strtolower($part));
         }, $parts));
 
         // List is a reserved keyword so change to Collection
@@ -29,7 +29,7 @@ abstract class Util
 
         $fullClassName = '\PayPro\Entities\\' . $className;
 
-        if (\class_exists($fullClassName)) {
+        if (class_exists($fullClassName)) {
             return $fullClassName;
         }
 
@@ -73,7 +73,7 @@ abstract class Util
     public static function toEntity($data, $client, $params = [])
     {
         if (self::isList($data)) {
-            return array_map(function ($i) use ($client) {
+            return array_map(static function ($i) use ($client) {
                 return self::toEntity($i, $client);
             }, $data);
         } elseif (\is_array($data)) {
@@ -112,7 +112,7 @@ abstract class Util
             return false;
         }
 
-        return [] === $array || (\array_keys($array) === \range(0, \count($array) - 1));
+        return [] === $array || (array_keys($array) === range(0, \count($array) - 1));
     }
 
     /**
@@ -132,7 +132,7 @@ abstract class Util
             $pieces[] = self::urlEncode($key) . '=' . self::urlEncode($value);
         }
 
-        return \implode('&', $pieces);
+        return implode('&', $pieces);
     }
 
     /**
@@ -145,9 +145,9 @@ abstract class Util
      */
     public static function urlEncode($value)
     {
-        $string = \urlencode((string) $value);
-        $string = \str_replace('%5B', '[', $string);
+        $string = urlencode((string) $value);
+        $string = str_replace('%5B', '[', $string);
 
-        return \str_replace('%5D', ']', $string);
+        return str_replace('%5D', ']', $string);
     }
 }

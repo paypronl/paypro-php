@@ -27,8 +27,8 @@ final class WebhooksTest extends TestCase
         $endpoint = new Webhooks($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(Webhook::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(Webhook::class, $list->first());
     }
 
     public function testIsGettable()
@@ -47,10 +47,10 @@ final class WebhooksTest extends TestCase
         $endpoint = new Webhooks($this->apiClient);
         $webhook = $endpoint->get('WH43CVU3A1TD6Z');
 
-        $this->assertInstanceOf(Webhook::class, $webhook);
-        $this->assertSame($webhook->id, 'WH43CVU3A1TD6Z');
-        $this->assertSame($webhook->name, 'Test Webhook');
-        $this->assertSame($webhook->url, 'https://example.org/paypro/webhook');
+        self::assertInstanceOf(Webhook::class, $webhook);
+        self::assertSame($webhook->id, 'WH43CVU3A1TD6Z');
+        self::assertSame($webhook->name, 'Test Webhook');
+        self::assertSame($webhook->url, 'https://example.org/paypro/webhook');
     }
 
     public function testIsCreatable()
@@ -70,6 +70,6 @@ final class WebhooksTest extends TestCase
         $endpoint = new Webhooks($this->apiClient);
         $webhook = $endpoint->create(['active' => false]);
 
-        $this->assertInstanceOf(Webhook::class, $webhook);
+        self::assertInstanceOf(Webhook::class, $webhook);
     }
 }

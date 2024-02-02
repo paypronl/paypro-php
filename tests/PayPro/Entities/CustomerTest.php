@@ -12,7 +12,7 @@ final class CustomerTest extends TestCase
     public function testDelete()
     {
         $response = $this->getFixture('customers/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'delete',
@@ -26,13 +26,13 @@ final class CustomerTest extends TestCase
         $customer = new Customer($data, $this->apiClient);
 
         $responseCustomer = $customer->delete();
-        $this->assertInstanceOf(Customer::class, $responseCustomer);
+        self::assertInstanceOf(Customer::class, $responseCustomer);
     }
 
     public function testUpdate()
     {
         $response = $this->getFixture('customers/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'patch',
@@ -46,6 +46,6 @@ final class CustomerTest extends TestCase
         $customer = new Customer($data, $this->apiClient);
 
         $responseCustomer = $customer->update(['address' => 'Gangpad 11']);
-        $this->assertInstanceOf(Customer::class, $responseCustomer);
+        self::assertInstanceOf(Customer::class, $responseCustomer);
     }
 }

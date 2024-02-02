@@ -32,10 +32,10 @@ class Response
      */
     public function __construct($body, $status, $headers)
     {
-        $jsonBody = \json_decode($body, true);
-        $jsonError = \json_last_error();
+        $jsonBody = json_decode($body, true);
+        $jsonError = json_last_error();
 
-        if (null === $jsonBody && \JSON_ERROR_NONE !== $jsonError) {
+        if (null === $jsonBody && JSON_ERROR_NONE !== $jsonError) {
             $message = 'Invalid response from API. The JSON returned in the body is not valid.';
 
             throw new Exception\ApiErrorException($message);

@@ -12,7 +12,7 @@ final class SubscriptionTest extends TestCase
     public function testUpdate()
     {
         $response = $this->getFixture('subscriptions/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'patch',
@@ -26,13 +26,13 @@ final class SubscriptionTest extends TestCase
         $subscriptions = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscriptions->update(['description' => 'Limited Subscription']);
-        $this->assertInstanceOf(Subscription::class, $responseSubscription);
+        self::assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testCancel()
     {
         $response = $this->getFixture('subscriptions/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'delete',
@@ -46,13 +46,13 @@ final class SubscriptionTest extends TestCase
         $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->cancel();
-        $this->assertInstanceOf(Subscription::class, $responseSubscription);
+        self::assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testPause()
     {
         $response = $this->getFixture('subscriptions/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'post',
@@ -66,13 +66,13 @@ final class SubscriptionTest extends TestCase
         $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->pause();
-        $this->assertInstanceOf(Subscription::class, $responseSubscription);
+        self::assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testResume()
     {
         $response = $this->getFixture('subscriptions/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'post',
@@ -86,13 +86,13 @@ final class SubscriptionTest extends TestCase
         $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->resume();
-        $this->assertInstanceOf(Subscription::class, $responseSubscription);
+        self::assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testSubscriptionPeriods()
     {
         $response = $this->getFixture('subscriptions/subscription_periods.json');
-        $data = \json_decode($this->getFixture('subscriptions/get.json'), true);
+        $data = json_decode($this->getFixture('subscriptions/get.json'), true);
 
         $this->stubRequest(
             'get',
@@ -106,14 +106,14 @@ final class SubscriptionTest extends TestCase
         $subscription = new Subscription($data, $this->apiClient);
 
         $subscriptionPeriods = $subscription->subscriptionPeriods();
-        $this->assertInstanceOf(Collection::class, $subscriptionPeriods);
-        $this->assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriods->first());
+        self::assertInstanceOf(Collection::class, $subscriptionPeriods);
+        self::assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriods->first());
     }
 
     public function testCreateSubscriptionPeriods()
     {
         $response = $this->getFixture('subscription_periods/get.json');
-        $data = \json_decode($this->getFixture('subscriptions/get.json'), true);
+        $data = json_decode($this->getFixture('subscriptions/get.json'), true);
 
         $this->stubRequest(
             'post',
@@ -128,6 +128,6 @@ final class SubscriptionTest extends TestCase
         $subscription = new Subscription($data, $this->apiClient);
 
         $subscriptionPeriod = $subscription->createSubscriptionPeriod(['amount' => 5000]);
-        $this->assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriod);
+        self::assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriod);
     }
 }

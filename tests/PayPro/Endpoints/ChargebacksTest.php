@@ -27,8 +27,8 @@ final class ChargebacksTest extends TestCase
         $endpoint = new Chargebacks($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(Chargeback::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(Chargeback::class, $list->first());
     }
 
     public function testIsGettable()
@@ -47,8 +47,8 @@ final class ChargebacksTest extends TestCase
         $endpoint = new Chargebacks($this->apiClient);
         $chargeback = $endpoint->get('PCV4U1P3UZTQPU');
 
-        $this->assertInstanceOf(Chargeback::class, $chargeback);
-        $this->assertSame($chargeback->id, 'PCV4U1P3UZTQPU');
-        $this->assertSame($chargeback->reason, 'MD06');
+        self::assertInstanceOf(Chargeback::class, $chargeback);
+        self::assertSame($chargeback->id, 'PCV4U1P3UZTQPU');
+        self::assertSame($chargeback->reason, 'MD06');
     }
 }

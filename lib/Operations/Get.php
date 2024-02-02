@@ -20,6 +20,6 @@ trait Get
      */
     public function get($id)
     {
-        return $this->apiRequest('get', static::resourceUrl() . '/' . \urlencode($id));
+        return $this->apiRequest('get', static::resourceUrl() . '/' . urlencode($id));
     }
 }

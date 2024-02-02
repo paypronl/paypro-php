@@ -19,14 +19,14 @@ final class EntityTest extends TestCase
         ];
 
         $entity = new Entity($data);
-        $this->assertInstanceOf(Entity::class, $entity);
+        self::assertInstanceOf(Entity::class, $entity);
 
-        $this->assertSame($entity['id'], 'PPXNQT8MXCA2UT');
-        $this->assertSame($entity['amount'], 5000);
-        $this->assertSame($entity['description'], 'Test Payment');
-        $this->assertSame($entity['links'], ['self' => 'https://api.paypro.nl/payments/PPXNQT8MXCA2UT']);
+        self::assertSame($entity['id'], 'PPXNQT8MXCA2UT');
+        self::assertSame($entity['amount'], 5000);
+        self::assertSame($entity['description'], 'Test Payment');
+        self::assertSame($entity['links'], ['self' => 'https://api.paypro.nl/payments/PPXNQT8MXCA2UT']);
 
-        $this->assertNull($entity['_links']);
-        $this->assertNull($entity['type']);
+        self::assertNull($entity['_links']);
+        self::assertNull($entity['type']);
     }
 }

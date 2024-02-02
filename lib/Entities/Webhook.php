@@ -52,10 +52,10 @@ class Webhook extends Resource
 
         $signatureVerifier->verify($signature);
 
-        $data = \json_decode($payload, true);
-        $jsonError = \json_last_error();
+        $data = json_decode($payload, true);
+        $jsonError = json_last_error();
 
-        if (null === $data && \JSON_ERROR_NONE !== $jsonError) {
+        if (null === $data && JSON_ERROR_NONE !== $jsonError) {
             $message = "Invalid payload {$payload} (json_last_error() was {$jsonError})";
 
             throw new InvalidEventPayloadException($message);

@@ -27,8 +27,8 @@ final class SubscriptionPeriodsTest extends TestCase
         $endpoint = new SubscriptionPeriods($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(SubscriptionPeriod::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(SubscriptionPeriod::class, $list->first());
     }
 
     public function testIsGettable()
@@ -47,9 +47,9 @@ final class SubscriptionPeriodsTest extends TestCase
         $endpoint = new SubscriptionPeriods($this->apiClient);
         $subscription_period = $endpoint->get('SPCMTC4RJLPNWT');
 
-        $this->assertInstanceOf(SubscriptionPeriod::class, $subscription_period);
-        $this->assertSame($subscription_period->id, 'SPCMTC4RJLPNWT');
-        $this->assertSame($subscription_period->period_number, 1);
-        $this->assertSame($subscription_period->amount, 5000);
+        self::assertInstanceOf(SubscriptionPeriod::class, $subscription_period);
+        self::assertSame($subscription_period->id, 'SPCMTC4RJLPNWT');
+        self::assertSame($subscription_period->period_number, 1);
+        self::assertSame($subscription_period->amount, 5000);
     }
 }

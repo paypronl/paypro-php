@@ -60,13 +60,13 @@ final class ClientTest extends TestCase
     {
         $client = new Client('api_key');
 
-        $this->assertInstanceOf(Chargebacks::class, $client->chargebacks);
-        $this->assertInstanceOf(Customers::class, $client->customers);
-        $this->assertInstanceOf(Events::class, $client->events);
-        $this->assertInstanceOf(Payments::class, $client->payments);
-        $this->assertInstanceOf(Refunds::class, $client->refunds);
-        $this->assertInstanceOf(SubscriptionPeriods::class, $client->subscriptionPeriods);
-        $this->assertInstanceOf(Subscriptions::class, $client->subscriptions);
-        $this->assertInstanceOf(Webhooks::class, $client->webhooks);
+        self::assertInstanceOf(Chargebacks::class, $client->chargebacks);
+        self::assertInstanceOf(Customers::class, $client->customers);
+        self::assertInstanceOf(Events::class, $client->events);
+        self::assertInstanceOf(Payments::class, $client->payments);
+        self::assertInstanceOf(Refunds::class, $client->refunds);
+        self::assertInstanceOf(SubscriptionPeriods::class, $client->subscriptionPeriods);
+        self::assertInstanceOf(Subscriptions::class, $client->subscriptions);
+        self::assertInstanceOf(Webhooks::class, $client->webhooks);
     }
 }

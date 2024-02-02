@@ -33,19 +33,19 @@ class Signature
      */
     public function __construct($payload, $timestamp, $secret, $tolerance = self::DEFAULT_TOLERANCE)
     {
-        if (!is_string($payload)) {
+        if (!\is_string($payload)) {
             throw new Exception\InvalidArgumentException('payload must be a string');
         }
 
-        if (!is_int($timestamp)) {
+        if (!\is_int($timestamp)) {
             throw new Exception\InvalidArgumentException('timestamp must be an epoch integer');
         }
 
-        if (!is_string($secret)) {
+        if (!\is_string($secret)) {
             throw new Exception\InvalidArgumentException('secret must be a string');
         }
 
-        if (!is_int($tolerance)) {
+        if (!\is_int($tolerance)) {
             throw new Exception\InvalidArgumentException('tolerance must be an integer');
         }
 
@@ -78,7 +78,7 @@ class Signature
      */
     public function verify($signature)
     {
-        if (!is_string($signature)) {
+        if (!\is_string($signature)) {
             throw new Exception\InvalidArgumentException('signature must be a string');
         }
 
@@ -88,7 +88,7 @@ class Signature
             throw Exception\SignatureVerificationException::create($message, null, $this->payload);
         }
 
-        if (\abs(\time() - $this->timestamp) > $this->tolerance) {
+        if (abs(time() - $this->timestamp) > $this->tolerance) {
             $message = 'Timestamp is outside the tolerance zone';
 
             throw Exception\SignatureVerificationException::create($message, null, $this->payload);

@@ -66,10 +66,10 @@ final class UtilTest extends TestCase
 
         $entity = Util::toEntity($data, $client, $params);
 
-        $this->assertInstanceOf(Collection::class, $entity);
-        $this->assertSame($entity->getFilters(), $params);
-        $this->assertSame($entity['count'], 0);
-        $this->assertSame($entity['data'], []);
+        self::assertInstanceOf(Collection::class, $entity);
+        self::assertSame($entity->getFilters(), $params);
+        self::assertSame($entity['count'], 0);
+        self::assertSame($entity['data'], []);
     }
 
     public function testToEntityWithEntityType()
@@ -90,13 +90,13 @@ final class UtilTest extends TestCase
         $client = 'client';
         $entity = Util::toEntity($data, $client);
 
-        $this->assertInstanceOf(Payment::class, $entity);
-        $this->assertInstanceOf(PayMethod::class, $entity['pay_method']);
+        self::assertInstanceOf(Payment::class, $entity);
+        self::assertInstanceOf(PayMethod::class, $entity['pay_method']);
 
-        $this->assertSame($entity['id'], 'PPK002A23LV3CG');
-        $this->assertSame($entity['amount'], 5000);
-        $this->assertSame($entity['currency'], 'EUR');
-        $this->assertSame($entity['description'], 'Test Payment');
+        self::assertSame($entity['id'], 'PPK002A23LV3CG');
+        self::assertSame($entity['amount'], 5000);
+        self::assertSame($entity['currency'], 'EUR');
+        self::assertSame($entity['description'], 'Test Payment');
     }
 
     public function testToEntityWithAssociativeArray()
@@ -104,7 +104,7 @@ final class UtilTest extends TestCase
         $client = 'client';
         $entity = Util::toEntity(['custom' => '12345'], $client);
 
-        $this->assertSame(['custom' => '12345'], $entity);
+        self::assertSame(['custom' => '12345'], $entity);
     }
 
     public function testToEntityWithArray()
@@ -112,7 +112,7 @@ final class UtilTest extends TestCase
         $client = 'client';
         $entity = Util::toEntity(['1', 2, '3'], $client);
 
-        $this->assertSame(['1', 2, '3'], $entity);
+        self::assertSame(['1', 2, '3'], $entity);
     }
 
     public function testToEntityWithString()
@@ -120,7 +120,7 @@ final class UtilTest extends TestCase
         $client = 'client';
         $entity = Util::toEntity('test', $client);
 
-        $this->assertSame('test', $entity);
+        self::assertSame('test', $entity);
     }
 
     public function testIsList()
@@ -139,22 +139,22 @@ final class UtilTest extends TestCase
     {
         $parameters = ['test' => 'hello'];
         $encodedParameters = Util::encodeParameters($parameters);
-        $this->assertSame($encodedParameters, 'test=hello');
+        self::assertSame($encodedParameters, 'test=hello');
 
         $parameters = ['test' => 'hello', 'limit' => 10];
         $encodedParameters = Util::encodeParameters($parameters);
-        $this->assertSame($encodedParameters, 'test=hello&limit=10');
+        self::assertSame($encodedParameters, 'test=hello&limit=10');
 
         $parameters = ['test[]' => 'hello', 'limit+test' => 10];
         $encodedParameters = Util::encodeParameters($parameters);
-        $this->assertSame($encodedParameters, 'test[]=hello&limit%2Btest=10');
+        self::assertSame($encodedParameters, 'test[]=hello&limit%2Btest=10');
     }
 
     public function testUrlEncode()
     {
-        $this->assertSame(Util::urlEncode('string'), 'string');
-        $this->assertSame(Util::urlEncode('string+test'), 'string%2Btest');
-        $this->assertSame(Util::urlEncode('string[]'), 'string[]');
-        $this->assertSame(Util::urlEncode(10), '10');
+        self::assertSame(Util::urlEncode('string'), 'string');
+        self::assertSame(Util::urlEncode('string+test'), 'string%2Btest');
+        self::assertSame(Util::urlEncode('string[]'), 'string[]');
+        self::assertSame(Util::urlEncode(10), '10');
     }
 }

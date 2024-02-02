@@ -14,13 +14,13 @@ final class ResponseTest extends TestCase
 
         $response = new Response($body, $status, $headers);
 
-        $this->assertInstanceOf(Response::class, $response);
+        self::assertInstanceOf(Response::class, $response);
 
-        $this->assertSame($response->getRawBody(), $body);
-        $this->assertSame($response->getData(), ['amount' => 500]);
-        $this->assertSame($response->getStatus(), 200);
-        $this->assertSame($response->getHeaders(), $headers);
-        $this->assertSame($response->getRequestId(), '2de44ce1-2ace-4118-922e-e53ab33f6fc7');
+        self::assertSame($response->getRawBody(), $body);
+        self::assertSame($response->getData(), ['amount' => 500]);
+        self::assertSame($response->getStatus(), 200);
+        self::assertSame($response->getHeaders(), $headers);
+        self::assertSame($response->getRequestId(), '2de44ce1-2ace-4118-922e-e53ab33f6fc7');
     }
 
     public function testConstructorWithInvalidData()

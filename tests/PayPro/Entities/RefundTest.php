@@ -12,7 +12,7 @@ final class RefundTest extends TestCase
     public function testCancel()
     {
         $response = $this->getFixture('refunds/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'delete',
@@ -26,6 +26,6 @@ final class RefundTest extends TestCase
         $refund = new Refund($data, $this->apiClient);
 
         $responseRefund = $refund->cancel();
-        $this->assertInstanceOf(Refund::class, $responseRefund);
+        self::assertInstanceOf(Refund::class, $responseRefund);
     }
 }

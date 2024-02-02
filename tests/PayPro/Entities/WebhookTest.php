@@ -14,7 +14,7 @@ final class WebhookTest extends TestCase
     public function testDelete()
     {
         $response = $this->getFixture('webhooks/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'delete',
@@ -28,13 +28,13 @@ final class WebhookTest extends TestCase
         $webhook = new Webhook($data, $this->apiClient);
 
         $responseWebhook = $webhook->delete();
-        $this->assertInstanceOf(Webhook::class, $responseWebhook);
+        self::assertInstanceOf(Webhook::class, $responseWebhook);
     }
 
     public function testUpdate()
     {
         $response = $this->getFixture('webhooks/get.json');
-        $data = \json_decode($response, true);
+        $data = json_decode($response, true);
 
         $this->stubRequest(
             'patch',
@@ -48,7 +48,7 @@ final class WebhookTest extends TestCase
         $webhook = new Webhook($data, $this->apiClient);
 
         $responseWebhook = $webhook->update(['active' => false]);
-        $this->assertInstanceOf(Webhook::class, $responseWebhook);
+        self::assertInstanceOf(Webhook::class, $responseWebhook);
     }
 
     public function testCreateEventWithInvalidSignature()
@@ -96,6 +96,6 @@ final class WebhookTest extends TestCase
             $tolerance
         );
 
-        $this->assertInstanceOf(Event::class, $event);
+        self::assertInstanceOf(Event::class, $event);
     }
 }

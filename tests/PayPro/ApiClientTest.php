@@ -109,7 +109,7 @@ final class ApiClientTest extends TestCase
             null,
             null,
             null,
-            \json_encode($response),
+            json_encode($response),
             422
         );
 
@@ -132,18 +132,18 @@ final class ApiClientTest extends TestCase
             null,
             null,
             null,
-            \json_encode($response),
+            json_encode($response),
             200,
             ['X-Request-Id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7']
         );
 
         $response = $client->request('get', '/payments');
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertSame($response->getRawBody(), '{"success":"True"}');
-        $this->assertSame($response->getData(), ['success' => 'True']);
-        $this->assertSame($response->getRequestId(), '2de44ce1-2ace-4118-922e-e53ab33f6fc7');
-        $this->assertSame($response->getHeaders(), ['X-Request-Id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7']);
+        self::assertInstanceOf(Response::class, $response);
+        self::assertSame($response->getRawBody(), '{"success":"True"}');
+        self::assertSame($response->getData(), ['success' => 'True']);
+        self::assertSame($response->getRequestId(), '2de44ce1-2ace-4118-922e-e53ab33f6fc7');
+        self::assertSame($response->getHeaders(), ['X-Request-Id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7']);
     }
 
     public function testRequestWithPost()
@@ -161,7 +161,7 @@ final class ApiClientTest extends TestCase
                 'Authorization' => 'Bearer api_client',
             ],
             null,
-            \json_encode($response),
+            json_encode($response),
             200,
             ['X-Request-Id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7']
         );

@@ -27,8 +27,8 @@ final class CustomersTest extends TestCase
         $endpoint = new Customers($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(Collection::class, $list);
-        $this->assertInstanceOf(Customer::class, $list->first());
+        self::assertInstanceOf(Collection::class, $list);
+        self::assertInstanceOf(Customer::class, $list->first());
     }
 
     public function testIsGettable()
@@ -47,10 +47,10 @@ final class CustomersTest extends TestCase
         $endpoint = new Customers($this->apiClient);
         $chargeback = $endpoint->get('CU10TV703T84E0');
 
-        $this->assertInstanceOf(Customer::class, $chargeback);
-        $this->assertSame($chargeback->id, 'CU10TV703T84E0');
-        $this->assertSame($chargeback->city, 'Amsterdam');
-        $this->assertSame($chargeback->address, 'Gangpad 12');
+        self::assertInstanceOf(Customer::class, $chargeback);
+        self::assertSame($chargeback->id, 'CU10TV703T84E0');
+        self::assertSame($chargeback->city, 'Amsterdam');
+        self::assertSame($chargeback->address, 'Gangpad 12');
     }
 
     public function testIsCreatable()
@@ -70,6 +70,6 @@ final class CustomersTest extends TestCase
         $endpoint = new Customers($this->apiClient);
         $chargeback = $endpoint->create(['address' => 'Gangpad 12']);
 
-        $this->assertInstanceOf(Customer::class, $chargeback);
+        self::assertInstanceOf(Customer::class, $chargeback);
     }
 }

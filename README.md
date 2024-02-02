@@ -1,6 +1,6 @@
 # PayPro PHP Library
 
-[![build](https://github.com/paypronl/paypro-php/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/paypronl/paypro-php/actions/workflows/build.yml)
+[![build](https://github.com/paypronl/paypro-php/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/paypronl/paypro-php/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The PayPro PHP library can be used to make integrating with the PayPro API easier when using PHP.

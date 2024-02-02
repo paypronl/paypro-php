@@ -2,11 +2,14 @@
 
 namespace PayPro;
 
-final class SignatureTest extends \PayPro\TestCase
+use PayPro\Exception\InvalidArgumentException;
+use PayPro\Exception\SignatureVerificationException;
+
+final class SignatureTest extends TestCase
 {
     public function testConstructorWithInvalidTimestamp()
     {
-        $this->expectException(\PayPro\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('timestamp must be an epoch integer');
 
         new Signature('test', 'timestmap', 'secret');
@@ -14,7 +17,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testConstructorWithInvalidPayload()
     {
-        $this->expectException(\PayPro\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('payload must be a string');
 
         new Signature(100, 100, 'secret');
@@ -22,7 +25,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testConstructorWithInvalidSecret()
     {
-        $this->expectException(\PayPro\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('secret must be a string');
 
         new Signature('test', 100, 100);
@@ -30,7 +33,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testConstructorWithInvalidTolerance()
     {
-        $this->expectException(\PayPro\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('tolerance must be an integer');
 
         new Signature('test', 100, 'secret', 'test');
@@ -56,7 +59,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testVerifyWithInvalidSignature()
     {
-        $this->expectException(\PayPro\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('signature must be a string');
 
         $signatureObject = new Signature('', 1702298964, 'secret');
@@ -65,7 +68,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testVerifySignatureDoesNoMatch()
     {
-        $this->expectException(\PayPro\Exception\SignatureVerificationException::class);
+        $this->expectException(SignatureVerificationException::class);
         $this->expectExceptionMessage('Signature does not match');
 
         $signatureObject = new Signature('', 1702298964, 'secret');
@@ -74,7 +77,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testVerifyTimestampTooOld()
     {
-        $this->expectException(\PayPro\Exception\SignatureVerificationException::class);
+        $this->expectException(SignatureVerificationException::class);
         $this->expectExceptionMessage('Timestamp is outside the tolerance zone');
 
         $timestamp = \time() - 60;
@@ -87,7 +90,7 @@ final class SignatureTest extends \PayPro\TestCase
 
     public function testVerifyTimestampTooNew()
     {
-        $this->expectException(\PayPro\Exception\SignatureVerificationException::class);
+        $this->expectException(SignatureVerificationException::class);
         $this->expectExceptionMessage('Timestamp is outside the tolerance zone');
 
         $timestamp = \time() + 60;

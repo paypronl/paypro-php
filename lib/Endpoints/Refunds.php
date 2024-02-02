@@ -2,10 +2,13 @@
 
 namespace PayPro\Endpoints;
 
+use PayPro\Operations\Collection;
+use PayPro\Operations\Get;
+
 class Refunds extends AbstractEndpoint
 {
-    use \PayPro\Operations\Collection;
-    use \PayPro\Operations\Get;
+    use Collection;
+    use Get;
 
     public function resourcePath()
     {

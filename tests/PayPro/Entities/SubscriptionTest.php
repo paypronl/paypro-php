@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
-final class SubscriptionTest extends \PayPro\TestCase
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class SubscriptionTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testUpdate()
     {
@@ -20,10 +23,10 @@ final class SubscriptionTest extends \PayPro\TestCase
             $response
         );
 
-        $subscriptions = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscriptions = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscriptions->update(['description' => 'Limited Subscription']);
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $responseSubscription);
+        $this->assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testCancel()
@@ -40,10 +43,10 @@ final class SubscriptionTest extends \PayPro\TestCase
             $response
         );
 
-        $subscription = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->cancel();
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $responseSubscription);
+        $this->assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testPause()
@@ -60,10 +63,10 @@ final class SubscriptionTest extends \PayPro\TestCase
             $response
         );
 
-        $subscription = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->pause();
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $responseSubscription);
+        $this->assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testResume()
@@ -80,10 +83,10 @@ final class SubscriptionTest extends \PayPro\TestCase
             $response
         );
 
-        $subscription = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscription = new Subscription($data, $this->apiClient);
 
         $responseSubscription = $subscription->resume();
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $responseSubscription);
+        $this->assertInstanceOf(Subscription::class, $responseSubscription);
     }
 
     public function testSubscriptionPeriods()
@@ -100,11 +103,11 @@ final class SubscriptionTest extends \PayPro\TestCase
             $response
         );
 
-        $subscription = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscription = new Subscription($data, $this->apiClient);
 
         $subscriptionPeriods = $subscription->subscriptionPeriods();
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $subscriptionPeriods);
-        $this->assertInstanceOf(\PayPro\Entities\SubscriptionPeriod::class, $subscriptionPeriods->first());
+        $this->assertInstanceOf(Collection::class, $subscriptionPeriods);
+        $this->assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriods->first());
     }
 
     public function testCreateSubscriptionPeriods()
@@ -122,9 +125,9 @@ final class SubscriptionTest extends \PayPro\TestCase
             201
         );
 
-        $subscription = new \PayPro\Entities\Subscription($data, $this->apiClient);
+        $subscription = new Subscription($data, $this->apiClient);
 
         $subscriptionPeriod = $subscription->createSubscriptionPeriod(['amount' => 5000]);
-        $this->assertInstanceOf(\PayPro\Entities\SubscriptionPeriod::class, $subscriptionPeriod);
+        $this->assertInstanceOf(SubscriptionPeriod::class, $subscriptionPeriod);
     }
 }

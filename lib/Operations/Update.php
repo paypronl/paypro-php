@@ -2,6 +2,8 @@
 
 namespace PayPro\Operations;
 
+use PayPro\Exception\ApiErrorException;
+
 /**
  * Implements the update endpoint for resources. Should only be implemented by Entities that decent
  * from Resource.
@@ -9,13 +11,13 @@ namespace PayPro\Operations;
 trait Update
 {
     /**
-     * Updates the resource
+     * Updates the resource.
      *
      * @param array $body
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
-     *
      * @return static the updated resource
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function update($body)
     {

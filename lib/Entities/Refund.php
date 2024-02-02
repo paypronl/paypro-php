@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
+use PayPro\Exception\ApiErrorException;
+use PayPro\Operations\Request;
+
 class Refund extends Resource
 {
-    use \PayPro\Operations\Request;
+    use Request;
 
     public function resourcePath()
     {
@@ -12,11 +15,11 @@ class Refund extends Resource
     }
 
     /**
-     * Cancels the refund
-     *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * Cancels the refund.
      *
      * @return static the canceled refund
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function cancel()
     {

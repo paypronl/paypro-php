@@ -16,7 +16,7 @@ class Signature
     /** @var string secret of the webhook */
     private $secret;
 
-    /** @var integer tolerance of the timestamp in seconds */
+    /** @var int tolerance of the timestamp in seconds */
     private $tolerance;
 
     /**
@@ -27,9 +27,9 @@ class Signature
      * @param string $secret the secret of the webhook used to generate the signature
      * @param int $tolerance the tolerance allowed between the current time and the timestamp in the header
      *
-     * @throws Exception\InvalidArgumentException when a parameters has the incorrect format
-     *
      * @return Signature the instance of Signature
+     *
+     * @throws Exception\InvalidArgumentException when a parameters has the incorrect format
      */
     public function __construct($payload, $timestamp, $secret, $tolerance = self::DEFAULT_TOLERANCE)
     {
@@ -71,10 +71,10 @@ class Signature
      *
      * @param string $signature
      *
+     * @return bool
+     *
      * @throws Exception\InvalidArgumentException when the signature has an invalid format
      * @throws Exception\SignatureVerificationException when the signature cannot be verified
-     *
-     * @return bool
      */
     public function verify($signature)
     {
@@ -84,11 +84,13 @@ class Signature
 
         if (!hash_equals($this->generateSignature(), $signature)) {
             $message = 'Signature does not match';
+
             throw Exception\SignatureVerificationException::create($message, null, $this->payload);
         }
 
-        if ((\abs(\time() - $this->timestamp) > $this->tolerance)) {
-            $message = "Timestamp is outside the tolerance zone";
+        if (\abs(\time() - $this->timestamp) > $this->tolerance) {
+            $message = 'Timestamp is outside the tolerance zone';
+
             throw Exception\SignatureVerificationException::create($message, null, $this->payload);
         }
 

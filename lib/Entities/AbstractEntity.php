@@ -2,12 +2,15 @@
 
 namespace PayPro\Entities;
 
+use PayPro\ApiClient;
+use PayPro\Util;
+
 abstract class AbstractEntity implements \ArrayAccess
 {
     /** @var array values returned by the API */
     protected $values;
 
-    /** @var \PayPro\ApiClient client used to make requests */
+    /** @var ApiClient client used to make requests */
     protected $client;
 
     /**
@@ -23,12 +26,14 @@ abstract class AbstractEntity implements \ArrayAccess
     {
         $this->client = $client;
 
-        $attributes = \PayPro\Util::normalizeApiAttributes($data);
+        $attributes = Util::normalizeApiAttributes($data);
         $this->values = $this->convertAttributesToEntities($attributes);
     }
 
     /**
-     * Gets the value from the values store
+     * Gets the value from the values store.
+     *
+     * @param mixed $key
      */
     public function __get($key)
     {
@@ -41,21 +46,26 @@ abstract class AbstractEntity implements \ArrayAccess
 
     /**
      *  Sets the value in the values store and converts it to an Entity if possible.
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     public function __set($key, $value)
     {
-        $this->values[$key] = \PayPro\Util::toEntity($value, $this->client);
+        $this->values[$key] = Util::toEntity($value, $this->client);
+    }
+
+    public function __debugInfo()
+    {
+        return $this->values;
     }
 
     // ArrayAccess methods
 
-    /**
-     * @return void
-     */
     #[\ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
-        $this->{$key} =  $value;
+        $this->{$key} = $value;
     }
 
     /**
@@ -67,9 +77,6 @@ abstract class AbstractEntity implements \ArrayAccess
         return \array_key_exists($key, $this->values);
     }
 
-    /**
-     * @return void
-     */
     #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
@@ -88,18 +95,13 @@ abstract class AbstractEntity implements \ArrayAccess
     // End ArrayAccess methods
 
     /**
-     * Gets the client
+     * Gets the client.
      *
      * @return null|\PayPro\ApiClient
      */
     public function getClient()
     {
         return $this->client;
-    }
-
-    public function __debugInfo()
-    {
-        return $this->values;
     }
 
     /**
@@ -114,7 +116,7 @@ abstract class AbstractEntity implements \ArrayAccess
         $newAttributes = [];
 
         foreach ($attributes as $key => $value) {
-            $newAttributes[$key] = \PayPro\Util::toEntity($value, $this->client);
+            $newAttributes[$key] = Util::toEntity($value, $this->client);
         }
 
         return $newAttributes;

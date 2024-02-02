@@ -2,6 +2,16 @@
 
 namespace PayPro;
 
+use PayPro\Endpoints\Chargebacks;
+use PayPro\Endpoints\Customers;
+use PayPro\Endpoints\Events;
+use PayPro\Endpoints\Payments;
+use PayPro\Endpoints\Refunds;
+use PayPro\Endpoints\SubscriptionPeriods;
+use PayPro\Endpoints\Subscriptions;
+use PayPro\Endpoints\Webhooks;
+use PayPro\Exception\InvalidArgumentException;
+
 class Client
 {
     /** @var string default base URL for the PayPro API */
@@ -10,35 +20,35 @@ class Client
     /** @var array<string, null|string> */
     public const DEFAULT_CONFIG = [
         'api_key' => null,
-        'api_url' => self::DEFAULT_API_URL
+        'api_url' => self::DEFAULT_API_URL,
     ];
+
+    /** @var Chargebacks */
+    public $chargebacks;
+
+    /** @var Customers */
+    public $customers;
+
+    /** @var Events */
+    public $events;
+
+    /** @var Payments */
+    public $payments;
+
+    /** @var Refunds */
+    public $refunds;
+
+    /** @var SubscriptionPeriods */
+    public $subscriptionPeriods;
+
+    /** @var Subscriptions */
+    public $subscriptions;
+
+    /** @var Webhooks */
+    public $webhooks;
 
     /** @var ApiClient */
     private $apiClient;
-
-    /** @var \PayPro\Endpoints\Chargebacks */
-    public $chargebacks;
-
-    /** @var \PayPro\Endpoints\Customers */
-    public $customers;
-
-    /** @var \PayPro\Endpoints\Events */
-    public $events;
-
-    /** @var \PayPro\Endpoints\Payments */
-    public $payments;
-
-    /** @var \PayPro\Endpoints\Refunds */
-    public $refunds;
-
-    /** @var \PayPro\Endpoints\SubscriptionPeriods */
-    public $subscriptionPeriods;
-
-    /** @var \PayPro\Endpoints\Subscriptions */
-    public $subscriptions;
-
-    /** @var \PayPro\Endpoints\Webhooks */
-    public $webhooks;
 
     /**
      * Initializes a new instance of the {@link Client} class.
@@ -58,7 +68,7 @@ class Client
         if (\is_string($config)) {
             $config = ['api_key' => $config];
         } elseif (!\is_array($config)) {
-            throw new \PayPro\Exception\InvalidArgumentException('$config must be a string or array');
+            throw new InvalidArgumentException('$config must be a string or array');
         }
 
         $config = \array_merge(self::DEFAULT_CONFIG, $config);
@@ -74,33 +84,33 @@ class Client
      */
     private function setupEndpoints()
     {
-        $this->chargebacks = new \PayPro\Endpoints\Chargebacks($this->apiClient);
-        $this->customers = new \PayPro\Endpoints\Customers($this->apiClient);
-        $this->events = new \PayPro\Endpoints\Events($this->apiClient);
-        $this->payments = new \PayPro\Endpoints\Payments($this->apiClient);
-        $this->refunds = new \PayPro\Endpoints\Refunds($this->apiClient);
-        $this->subscriptionPeriods = new \PayPro\Endpoints\SubscriptionPeriods($this->apiClient);
-        $this->subscriptions = new \PayPro\Endpoints\Subscriptions($this->apiClient);
-        $this->webhooks = new \PayPro\Endpoints\Webhooks($this->apiClient);
+        $this->chargebacks = new Chargebacks($this->apiClient);
+        $this->customers = new Customers($this->apiClient);
+        $this->events = new Events($this->apiClient);
+        $this->payments = new Payments($this->apiClient);
+        $this->refunds = new Refunds($this->apiClient);
+        $this->subscriptionPeriods = new SubscriptionPeriods($this->apiClient);
+        $this->subscriptions = new Subscriptions($this->apiClient);
+        $this->webhooks = new Webhooks($this->apiClient);
     }
 
     /**
      * @param array<string, mixed> $config
      *
-     * @throws \PayPro\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function validateConfig($config)
     {
-        if ($config['api_key'] !== null && !\is_string($config['api_key'])) {
-            throw new \PayPro\Exception\InvalidArgumentException('api_key must be null or a string');
+        if (null !== $config['api_key'] && !\is_string($config['api_key'])) {
+            throw new InvalidArgumentException('api_key must be null or a string');
         }
 
-        if ($config['api_key'] !== null && $config['api_key'] === '') {
-            throw new \PayPro\Exception\InvalidArgumentException('api_key cannot be an empty string');
+        if (null !== $config['api_key'] && '' === $config['api_key']) {
+            throw new InvalidArgumentException('api_key cannot be an empty string');
         }
 
-        if ($config['api_key'] !== null && (\preg_match('/\s/', $config['api_key']))) {
-            throw new \PayPro\Exception\InvalidArgumentException('api_key cannot contain whitespaces');
+        if (null !== $config['api_key'] && \preg_match('/\s/', $config['api_key'])) {
+            throw new InvalidArgumentException('api_key cannot contain whitespaces');
         }
     }
 }

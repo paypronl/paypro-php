@@ -2,6 +2,7 @@
 
 namespace PayPro\Operations;
 
+use PayPro\Exception\ApiErrorException;
 use PayPro\Util;
 
 /**
@@ -19,14 +20,15 @@ trait Request
      * @param array $headers
      * @param null|array $body
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
-     *
      * @return mixed
+     *
+     * @throws ApiErrorException if the request fails
      */
     protected function apiRequest($method, $path, $params = [], $headers = [], $body = null)
     {
-        $body = $body !== null ? \json_encode($body) : null;
+        $body = null !== $body ? \json_encode($body) : null;
         $response = $this->getClient()->request($method, $path, $params, $headers, $body);
+
         return Util::toEntity($response->getData(), $this->getClient(), $params);
     }
 }

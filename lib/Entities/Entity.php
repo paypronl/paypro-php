@@ -2,6 +2,4 @@
 
 namespace PayPro\Entities;
 
-class Entity extends AbstractEntity
-{
-}
+class Entity extends AbstractEntity {}

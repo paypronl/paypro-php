@@ -2,7 +2,9 @@
 
 namespace PayPro\Entities;
 
-final class EntityTest extends \PayPro\TestCase
+use PayPro\TestCase;
+
+final class EntityTest extends TestCase
 {
     public function testConstructor()
     {
@@ -12,12 +14,12 @@ final class EntityTest extends \PayPro\TestCase
             'amount' => 5000,
             'description' => 'Test Payment',
             '_links' => [
-                'self' => 'https://api.paypro.nl/payments/PPXNQT8MXCA2UT'
-            ]
+                'self' => 'https://api.paypro.nl/payments/PPXNQT8MXCA2UT',
+            ],
         ];
 
-        $entity = new \PayPro\Entities\Entity($data);
-        $this->assertInstanceOf(\PayPro\Entities\Entity::class, $entity);
+        $entity = new Entity($data);
+        $this->assertInstanceOf(Entity::class, $entity);
 
         $this->assertSame($entity['id'], 'PPXNQT8MXCA2UT');
         $this->assertSame($entity['amount'], 5000);

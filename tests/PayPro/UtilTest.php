@@ -2,18 +2,22 @@
 
 namespace PayPro;
 
-final class UtilTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Payment;
+use PayPro\Entities\PayMethod;
+
+final class UtilTest extends TestCase
 {
     public function testEntityClass()
     {
         $entityClass = Util::entityClass('payment');
-        static::assertSame('\PayPro\Entities\Payment', $entityClass);
+        self::assertSame('\PayPro\Entities\Payment', $entityClass);
 
         $entityClass = Util::entityClass('pay_method');
-        static::assertSame('\PayPro\Entities\PayMethod', $entityClass);
+        self::assertSame('\PayPro\Entities\PayMethod', $entityClass);
 
         $entityClass = Util::entityClass('unknown');
-        static::assertSame('\PayPro\Entities\Entity', $entityClass);
+        self::assertSame('\PayPro\Entities\Entity', $entityClass);
     }
 
     public function testNormalizedApiAttributes()
@@ -26,13 +30,13 @@ final class UtilTest extends \PayPro\TestCase
             'state' => 'paid',
             'description' => 'Test Payment',
             '_links' => [
-                'self' => 'https://api.paypro.nl/payments/PP12CP1Q0K4QJL'
-            ]
+                'self' => 'https://api.paypro.nl/payments/PP12CP1Q0K4QJL',
+            ],
         ];
 
         $normalizedAttributes = Util::normalizeApiAttributes($attributes);
 
-        static::assertSame(
+        self::assertSame(
             [
                 'id' => 'PP12CP1Q0K4QJL',
                 'amount' => 1000,
@@ -40,13 +44,13 @@ final class UtilTest extends \PayPro\TestCase
                 'state' => 'paid',
                 'description' => 'Test Payment',
                 'links' => [
-                    'self' => 'https://api.paypro.nl/payments/PP12CP1Q0K4QJL'
-                ]
+                    'self' => 'https://api.paypro.nl/payments/PP12CP1Q0K4QJL',
+                ],
             ],
             $normalizedAttributes
         );
 
-        static::assertSame($attributes['type'], 'payment');
+        self::assertSame($attributes['type'], 'payment');
     }
 
     public function testToEntityWithListType()
@@ -54,7 +58,7 @@ final class UtilTest extends \PayPro\TestCase
         $data = [
             'type' => 'list',
             'count' => 0,
-            'data' => []
+            'data' => [],
         ];
 
         $client = 'client';
@@ -62,7 +66,7 @@ final class UtilTest extends \PayPro\TestCase
 
         $entity = Util::toEntity($data, $client, $params);
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $entity);
+        $this->assertInstanceOf(Collection::class, $entity);
         $this->assertSame($entity->getFilters(), $params);
         $this->assertSame($entity['count'], 0);
         $this->assertSame($entity['data'], []);
@@ -79,15 +83,15 @@ final class UtilTest extends \PayPro\TestCase
             'pay_method' => [
                 'id' => 'ideal',
                 'type' => 'pay_method',
-                'name' => 'iDEAL'
-            ]
+                'name' => 'iDEAL',
+            ],
         ];
 
         $client = 'client';
         $entity = Util::toEntity($data, $client);
 
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $entity);
-        $this->assertInstanceOf(\PayPro\Entities\PayMethod::class, $entity['pay_method']);
+        $this->assertInstanceOf(Payment::class, $entity);
+        $this->assertInstanceOf(PayMethod::class, $entity['pay_method']);
 
         $this->assertSame($entity['id'], 'PPK002A23LV3CG');
         $this->assertSame($entity['amount'], 5000);
@@ -122,13 +126,13 @@ final class UtilTest extends \PayPro\TestCase
     public function testIsList()
     {
         $list = ['test', [], 5];
-        static::assertTrue(Util::isList($list));
+        self::assertTrue(Util::isList($list));
 
         $emptyList = [];
-        static::assertTrue(Util::isList($emptyList));
+        self::assertTrue(Util::isList($emptyList));
 
         $notList = ['test' => 'Hello', 5, 'string'];
-        static::assertFalse(Util::isList($notList));
+        self::assertFalse(Util::isList($notList));
     }
 
     public function testEncodeParameters()

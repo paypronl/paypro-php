@@ -5,7 +5,7 @@ namespace PayPro\HttpClient;
 interface HttpClientInterface
 {
     /**
-     * Sends a request to the PayPro API
+     * Sends a request to the PayPro API.
      *
      * @param string $method
      * @param string $url

@@ -4,6 +4,8 @@ namespace PayPro;
 
 class PayPro
 {
+    public const VERSION = '0.1.0';
+
     /** @var string The PayPro API key to authorize your requests */
     public static $apiKey;
 
@@ -11,7 +13,7 @@ class PayPro
     public static $apiUrl = 'https://api.paypro.nl';
 
     /** @var string The path to the CA bundle */
-    public static $caBundlePath = null;
+    public static $caBundlePath;
 
     /** @var bool Verify SSL certiticates */
     public static $verifySslCertificates = true;
@@ -19,10 +21,8 @@ class PayPro
     /** @var int The amount of seconds when requests will timeout */
     public static $timeout = 30;
 
-    public const VERSION = '0.1.0';
-
     /**
-     * Gets the default API key
+     * Gets the default API key.
      *
      * @return string
      */
@@ -32,7 +32,7 @@ class PayPro
     }
 
     /**
-     * Sets the default API key
+     * Sets the default API key.
      *
      * @param string $apiKey
      */
@@ -42,7 +42,7 @@ class PayPro
     }
 
     /**
-     * Gets the default API url
+     * Gets the default API url.
      *
      * @return string
      */
@@ -52,7 +52,7 @@ class PayPro
     }
 
     /**
-     * Gets the path to the ca bundle
+     * Gets the path to the ca bundle.
      *
      * @return string
      */
@@ -62,7 +62,7 @@ class PayPro
     }
 
     /**
-     * Sets the path to the ca bundle
+     * Sets the path to the ca bundle.
      *
      * @param string $caBundlePath
      */
@@ -72,7 +72,7 @@ class PayPro
     }
 
     /**
-     * Get the setting if SSL certificates should be verified
+     * Get the setting if SSL certificates should be verified.
      *
      * @return bool
      */
@@ -82,7 +82,7 @@ class PayPro
     }
 
     /**
-     * Sets if the SSL certificates should be verified
+     * Sets if the SSL certificates should be verified.
      *
      * @param bool $verify
      */
@@ -92,7 +92,7 @@ class PayPro
     }
 
     /**
-     * Get the default setting for the timeout in seconds
+     * Get the default setting for the timeout in seconds.
      *
      * @return int
      */
@@ -102,7 +102,7 @@ class PayPro
     }
 
     /**
-     * Sets the timeout for requests in seconds
+     * Sets the timeout for requests in seconds.
      *
      * @param int $timeout
      */
@@ -112,22 +112,22 @@ class PayPro
     }
 
     /**
-     * Get path to the packaged ca bundle
-     *
-     * @return string
-     */
-    private static function getDefaultCaBundlePath()
-    {
-        return \realpath(__DIR__ . '/../data/cacert.pem');
-    }
-
-    /**
-     * Get the version of this library
+     * Get the version of this library.
      *
      * @return string
      */
     public static function getVersion()
     {
         return PayPro::VERSION;
+    }
+
+    /**
+     * Get path to the packaged ca bundle.
+     *
+     * @return string
+     */
+    private static function getDefaultCaBundlePath()
+    {
+        return \realpath(__DIR__ . '/../data/cacert.pem');
     }
 }

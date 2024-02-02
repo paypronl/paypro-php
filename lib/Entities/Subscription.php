@@ -2,10 +2,14 @@
 
 namespace PayPro\Entities;
 
+use PayPro\Exception\ApiErrorException;
+use PayPro\Operations\Request;
+use PayPro\Operations\Update;
+
 class Subscription extends Resource
 {
-    use \PayPro\Operations\Request;
-    use \PayPro\Operations\Update;
+    use Request;
+    use Update;
 
     public function resourcePath()
     {
@@ -13,11 +17,11 @@ class Subscription extends Resource
     }
 
     /**
-     * Cancels the subscription
-     *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * Cancels the subscription.
      *
      * @return static the canceled subscription
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function cancel()
     {
@@ -25,54 +29,62 @@ class Subscription extends Resource
     }
 
     /**
-     * Pauses the subscription
-     *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * Pauses the subscription.
      *
      * @return static the paused subscription
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function pause()
     {
         $url = $this->resourceUrl() . '/pause';
+
         return $this->apiRequest('post', $url);
     }
 
     /**
-     * Resumes the subscription
-     *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * Resumes the subscription.
      *
      * @return static the resumed subscription
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function resume()
     {
         $url = $this->resourceUrl() . '/resume';
+
         return $this->apiRequest('post', $url);
     }
 
     /**
-     * Returns all subscription periods of the subscription
+     * Returns all subscription periods of the subscription.
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * @param mixed $params
      *
-     * @return \PayPro\Entities\Collection a list with the subscription periods
+     * @return Collection a list with the subscription periods
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function subscriptionPeriods($params = [])
     {
         $url = $this->resourceUrl() . '/subscription_periods';
+
         return $this->apiRequest('get', $url, $params);
     }
 
     /**
      * Creates a new subscription period for the Subscription.
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * @param mixed $body
      *
-     * @return \PayPro\Entities\SubscriptionPeriod the created subscription period
+     * @return SubscriptionPeriod the created subscription period
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function createSubscriptionPeriod($body)
     {
         $url = $this->resourceUrl() . '/subscription_periods';
+
         return $this->apiRequest('post', $url, [], [], $body);
     }
 }

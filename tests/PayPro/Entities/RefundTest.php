@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
-final class RefundTest extends \PayPro\TestCase
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class RefundTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testCancel()
     {
@@ -20,9 +23,9 @@ final class RefundTest extends \PayPro\TestCase
             $response
         );
 
-        $refund = new \PayPro\Entities\Refund($data, $this->apiClient);
+        $refund = new Refund($data, $this->apiClient);
 
         $responseRefund = $refund->cancel();
-        $this->assertInstanceOf(\PayPro\Entities\Refund::class, $responseRefund);
+        $this->assertInstanceOf(Refund::class, $responseRefund);
     }
 }

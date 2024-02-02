@@ -2,9 +2,14 @@
 
 namespace PayPro\Endpoints;
 
-final class PaymentsTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Payment;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class PaymentsTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +24,11 @@ final class PaymentsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Payments($this->apiClient);
+        $endpoint = new Payments($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Payment::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,10 +44,10 @@ final class PaymentsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Payments($this->apiClient);
+        $endpoint = new Payments($this->apiClient);
         $payment = $endpoint->get('PPSKN6FAN8KNE1');
 
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $payment);
+        $this->assertInstanceOf(Payment::class, $payment);
         $this->assertSame($payment->id, 'PPSKN6FAN8KNE1');
         $this->assertSame($payment->description, 'Unlimited Subscription');
         $this->assertSame($payment->amount, 5000);
@@ -62,9 +67,9 @@ final class PaymentsTest extends \PayPro\TestCase
             201
         );
 
-        $endpoint = new \PayPro\Endpoints\Payments($this->apiClient);
+        $endpoint = new Payments($this->apiClient);
         $payment = $endpoint->create(['amount' => 5000]);
 
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $payment);
+        $this->assertInstanceOf(Payment::class, $payment);
     }
 }

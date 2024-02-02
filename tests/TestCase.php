@@ -2,6 +2,4 @@
 
 namespace PayPro;
 
-class TestCase extends \PHPUnit\Framework\TestCase
-{
-}
+class TestCase extends \PHPUnit\Framework\TestCase {}

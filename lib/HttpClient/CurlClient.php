@@ -2,6 +2,8 @@
 
 namespace PayPro\HttpClient;
 
+use PayPro\Exception\ApiConnectionException;
+use PayPro\Exception\InvalidArgumentException;
 use PayPro\PayPro;
 use PayPro\Util;
 
@@ -15,7 +17,7 @@ class CurlClient implements HttpClientInterface
     }
 
     /**
-     * Do a request with the client
+     * Do a request with the client.
      *
      * @param string $method
      * @param string $url
@@ -40,20 +42,28 @@ class CurlClient implements HttpClientInterface
                     $encodedParameters = Util::encodeParameters($params);
                     $url = $url . '?' . $encodedParameters;
                 }
+
                 break;
+
             case 'post':
                 $curlOpts[\CURLOPT_POST] = 1;
                 $curlOpts[\CURLOPT_POSTFIELDS] = $body;
+
                 break;
+
             case 'delete':
                 $curlOpts[\CURLOPT_CUSTOMREQUEST] = 'DELETE';
+
                 break;
+
             case 'patch':
                 $curlOpts[\CURLOPT_CUSTOMREQUEST] = 'PATCH';
                 $curlOpts[\CURLOPT_POSTFIELDS] = $body;
+
                 break;
+
             default:
-                throw new \PayPro\Exception\InvalidArgumentException("Unknown method given {$method}");
+                throw new InvalidArgumentException("Unknown method given {$method}");
         }
 
         $curlOpts[\CURLOPT_URL] = $url;
@@ -74,7 +84,7 @@ class CurlClient implements HttpClientInterface
 
         $responseBody = \curl_exec($this->curlHandle);
 
-        if ($responseBody === false) {
+        if (false === $responseBody) {
             $this->handleError(\curl_errno($this->curlHandle), \curl_error($this->curlHandle));
         }
 
@@ -91,7 +101,7 @@ class CurlClient implements HttpClientInterface
      * @param int $errorCode
      * @param string $errorMessage
      *
-     * @throws \PayPro\Exception\ApiConnectionException
+     * @throws ApiConnectionException
      */
     private function handleError($errorCode, $errorMessage)
     {
@@ -101,24 +111,26 @@ class CurlClient implements HttpClientInterface
             case \CURLE_OPERATION_TIMEOUTED:
                 $message = 'Failed to make a connection to the PayPro API. ' .
                            'This could indicate a DNS issue or because you have no internet connection.';
+
                 // no break
             case \CURLE_SSL_CACERT:
             case \CURLE_SSL_PEER_CERTIFICATE:
                 $message = 'Failed to create a secure connection with the PayPro API. ' .
                            'Please make sure https://api.paypro.nl certificate is accepted in your ' .
                            'network.';
+
                 // no break
             default:
-                $message = "Could not connect to the PayPro API. Curl error: $errorMessage";
+                $message = "Could not connect to the PayPro API. Curl error: {$errorMessage}";
         }
 
-        $message .=  "\n\n Connection error [$errorCode]: $message";
+        $message .= "\n\n Connection error [{$errorCode}]: {$message}";
 
-        throw new \PayPro\Exception\ApiConnectionException($message);
+        throw new ApiConnectionException($message);
     }
 
     /**
-     * Converts an array of headers to raw headers
+     * Converts an array of headers to raw headers.
      *
      * @param array $headers
      *
@@ -136,9 +148,8 @@ class CurlClient implements HttpClientInterface
     }
 
     /**
-     * Used in the callback for parsing Curl headers
+     * Used in the callback for parsing Curl headers.
      *
-     * @param $line
      * @param array &$headers
      *
      * @return int
@@ -155,11 +166,11 @@ class CurlClient implements HttpClientInterface
     }
 
     /**
-     * Closes the curl handle if it exists
+     * Closes the curl handle if it exists.
      */
     private function closeCurlHandle()
     {
-        if ($this->curlHandle !== null) {
+        if (null !== $this->curlHandle) {
             \curl_close($this->curlHandle);
             $this->curlHandle = null;
         }

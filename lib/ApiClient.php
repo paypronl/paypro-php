@@ -2,6 +2,9 @@
 
 namespace PayPro;
 
+use PayPro\HttpClient\CurlClient;
+use PayPro\HttpClient\HttpClientInterface;
+
 class ApiClient
 {
     /** @var string api key to be used for requests */
@@ -10,7 +13,7 @@ class ApiClient
     /** @var string api url to be used for requests */
     private $apiUrl;
 
-    /** @var \PayPro\HttpClient\HttpClientInterface the http client used for requests */
+    /** @var HttpClientInterface the http client used for requests */
     private static $httpClient;
 
     /**
@@ -21,7 +24,7 @@ class ApiClient
     {
         $this->apiKey = $apiKey;
 
-        if ($apiUrl === null) {
+        if (null === $apiUrl) {
             $apiUrl = PayPro::getApiUrl();
         }
 
@@ -38,12 +41,12 @@ class ApiClient
      * @param array $headers the headers for the request
      * @param null|string $body the body fot the request
      *
+     * @return Response the response of the request
+     *
      * @throws Exception\AuthenticationException
      * @throws Exception\ResourceNotFoundException
      * @throws Exception\ValidationException
      * @throws Exception\ApiErrorException
-     *
-     * @return Response the response of the request
      */
     public function request($method, $path, $params = [], $headers = [], $body = null)
     {
@@ -58,9 +61,19 @@ class ApiClient
 
         if ($response->getStatus() >= 400) {
             return $this->handleErrorResponse($response);
-        } else {
-            return $response;
         }
+
+        return $response;
+    }
+
+    /**
+     * Sets the HTTP client. Can be used if you want to use a different HTTP client.
+     *
+     * @param HttpClientInterface $client
+     */
+    public static function setHttpClient($client)
+    {
+        self::$httpClient = $client;
     }
 
     /**
@@ -84,9 +97,12 @@ class ApiClient
                 $message = 'Invalid API key supplied. Make sure to set a correct API key. ' .
                            'You can find your API key in the PayPro dashboard at ' .
                            '"https://app.paypro.nl/developers/api-keys".';
+
                 throw Exception\AuthenticationException::create($message, $status, $body, $headers);
+
             case 404:
                 throw Exception\ResourceNotFoundException::create('Resource not found', $status, $body, $headers);
+
             case 422:
                 $responseData = $response->getData()['error'];
 
@@ -95,7 +111,9 @@ class ApiClient
                 $errorParam = isset($responseData['param']) ? $responseData['param'] : null;
 
                 $message = "Validation error - param: {$errorParam} because {$errorMessage}";
+
                 throw Exception\ValidationException::create($message, $status, $body, $headers, $errorCode);
+
             default:
                 throw Exception\ApiErrorException::create('Unknown error', $status, $body, $headers);
         }
@@ -111,7 +129,7 @@ class ApiClient
         return [
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer {$this->apiKey}",
-            'User-Agent' => $this->userAgent()
+            'User-Agent' => $this->userAgent(),
         ];
     }
 
@@ -123,11 +141,11 @@ class ApiClient
      */
     private function checkApiKey()
     {
-        if ($this->apiKey === null) {
+        if (null === $this->apiKey) {
             $this->apiKey = PayPro::getApiKey();
         }
 
-        if ($this->apiKey === null) {
+        if (null === $this->apiKey) {
             $message = 'API key not set. ' .
                        'Make sure to set the API key with "PayPro::setApiKey(<API_KEY>)". ' .
                        'You can find your API key in the PayPro dashboard at "https://app.paypro.' .
@@ -138,7 +156,7 @@ class ApiClient
     }
 
     /**
-     * Generates the userAgent to be set in the request
+     * Generates the userAgent to be set in the request.
      *
      * @return string
      */
@@ -148,7 +166,9 @@ class ApiClient
     }
 
     /**
-     * Returns the request url with the supplied path
+     * Returns the request url with the supplied path.
+     *
+     * @param mixed $path
      *
      * @return string
      */
@@ -161,24 +181,14 @@ class ApiClient
      * Get the HTTP client set for this class. If not set it will create a new instance of the http
      * client.
      *
-     * @return \PayPro\HttpClient\HttpClientInterface
+     * @return HttpClientInterface
      */
     private function httpClient()
     {
         if (!self::$httpClient) {
-            self::$httpClient = new \PayPro\HttpClient\CurlClient();
+            self::$httpClient = new CurlClient();
         }
 
         return self::$httpClient;
-    }
-
-    /**
-     * Sets the HTTP client. Can be used if you want to use a different HTTP client.
-     *
-     * @param \PayPro\HttpClient\HttpClientInterface $client
-     */
-    public static function setHttpClient($client)
-    {
-        self::$httpClient = $client;
     }
 }

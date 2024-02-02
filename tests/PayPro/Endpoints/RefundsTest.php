@@ -2,9 +2,14 @@
 
 namespace PayPro\Endpoints;
 
-final class RefundsTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Refund;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class RefundsTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +24,11 @@ final class RefundsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Refunds($this->apiClient);
+        $endpoint = new Refunds($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Refund::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Refund::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,10 +44,10 @@ final class RefundsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Refunds($this->apiClient);
+        $endpoint = new Refunds($this->apiClient);
         $refund = $endpoint->get('PRNAUYTZ727UED');
 
-        $this->assertInstanceOf(\PayPro\Entities\Refund::class, $refund);
+        $this->assertInstanceOf(Refund::class, $refund);
         $this->assertSame($refund->id, 'PRNAUYTZ727UED');
         $this->assertSame($refund->description, 'Test Payment');
         $this->assertSame($refund->refunded_at, null);

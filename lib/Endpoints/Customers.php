@@ -2,11 +2,15 @@
 
 namespace PayPro\Endpoints;
 
+use PayPro\Operations\Collection;
+use PayPro\Operations\Create;
+use PayPro\Operations\Get;
+
 class Customers extends AbstractEndpoint
 {
-    use \PayPro\Operations\Collection;
-    use \PayPro\Operations\Create;
-    use \PayPro\Operations\Get;
+    use Collection;
+    use Create;
+    use Get;
 
     public function resourcePath()
     {

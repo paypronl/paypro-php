@@ -2,9 +2,15 @@
 
 namespace PayPro\Endpoints;
 
-final class EventsTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Event;
+use PayPro\Entities\Payment;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class EventsTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +25,11 @@ final class EventsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Events($this->apiClient);
+        $endpoint = new Events($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Event::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Event::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,12 +45,12 @@ final class EventsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Events($this->apiClient);
+        $endpoint = new Events($this->apiClient);
         $event = $endpoint->get('EVYK7KCFJAXA23UKSG');
 
-        $this->assertInstanceOf(\PayPro\Entities\Event::class, $event);
+        $this->assertInstanceOf(Event::class, $event);
         $this->assertSame($event->id, 'EVYK7KCFJAXA23UKSG');
         $this->assertSame($event->event_type, 'payment.created');
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $event->payload);
+        $this->assertInstanceOf(Payment::class, $event->payload);
     }
 }

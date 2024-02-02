@@ -15,7 +15,7 @@ trait TestHelper
     {
         $this->baseFixturePath = \realpath(__DIR__ . '/fixtures/');
         $this->httpClientMock = $this->createMock('\PayPro\HttpClient\HttpClientInterface');
-        $this->apiClient = new \PayPro\ApiClient('api_key');
+        $this->apiClient = new ApiClient('api_key');
     }
 
     /**
@@ -28,6 +28,7 @@ trait TestHelper
     protected function getFixture($path)
     {
         $filename = $this->baseFixturePath . '/' . $path;
+
         return file_get_contents($filename);
     }
 
@@ -37,10 +38,10 @@ trait TestHelper
      *
      * @param string $method the method of the request
      * @param string $path the path of the request
-     * @param array|null $params the params of the request
-     * @param array|null $headers the headers of the request
-     * @param array|null $body the body of the request
-     * @param string|null $response the response body
+     * @param null|array $params the params of the request
+     * @param null|array $headers the headers of the request
+     * @param null|array $body the body of the request
+     * @param null|string $response the response body
      * @param int $code the response code
      * @param array $responseHeaders the response headers
      *
@@ -58,7 +59,7 @@ trait TestHelper
     ) {
         ApiClient::setHttpClient($this->httpClientMock);
 
-        $url = \PayPro\PayPro::getApiUrl() . $path;
+        $url = PayPro::getApiUrl() . $path;
 
         return $this->httpClientMock
             ->expects($this->once())
@@ -66,8 +67,8 @@ trait TestHelper
             ->with(
                 $this->identicalTo(\strtolower($method)),
                 $this->identicalTo($url),
-                $params === null ? $this->anything() : $this->identicalTo($params),
-                $headers === null ? $this->anything() : $this->callback(function ($array) use ($headers) {
+                null === $params ? $this->anything() : $this->identicalTo($params),
+                null === $headers ? $this->anything() : $this->callback(function ($array) use ($headers) {
                     foreach ($headers as $header) {
                         if (!\in_array($header, $array, true)) {
                             return false;
@@ -76,8 +77,9 @@ trait TestHelper
 
                     return true;
                 }),
-                $body === null ? $this->anything() : $this->identicalTo(\json_encode($body))
+                null === $body ? $this->anything() : $this->identicalTo(\json_encode($body))
             )
-            ->willReturn([$response, $code, $responseHeaders]);
+            ->willReturn([$response, $code, $responseHeaders])
+        ;
     }
 }

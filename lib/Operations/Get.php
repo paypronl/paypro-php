@@ -2,19 +2,21 @@
 
 namespace PayPro\Operations;
 
+use PayPro\Exception\ApiErrorException;
+
 /**
  * Implements the get endpoint for resources. Should only used by Endpoint classes.
  */
 trait Get
 {
     /**
-     * Retrieve a single resource from the API
+     * Retrieve a single resource from the API.
      *
      * @param string $id
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
-     *
      * @return static the returned resource
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function get($id)
     {

@@ -2,9 +2,14 @@
 
 namespace PayPro\Endpoints;
 
-final class WebhooksTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Webhook;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class WebhooksTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +24,11 @@ final class WebhooksTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Webhooks($this->apiClient);
+        $endpoint = new Webhooks($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Webhook::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Webhook::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,10 +44,10 @@ final class WebhooksTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Webhooks($this->apiClient);
+        $endpoint = new Webhooks($this->apiClient);
         $webhook = $endpoint->get('WH43CVU3A1TD6Z');
 
-        $this->assertInstanceOf(\PayPro\Entities\Webhook::class, $webhook);
+        $this->assertInstanceOf(Webhook::class, $webhook);
         $this->assertSame($webhook->id, 'WH43CVU3A1TD6Z');
         $this->assertSame($webhook->name, 'Test Webhook');
         $this->assertSame($webhook->url, 'https://example.org/paypro/webhook');
@@ -62,9 +67,9 @@ final class WebhooksTest extends \PayPro\TestCase
             201
         );
 
-        $endpoint = new \PayPro\Endpoints\Webhooks($this->apiClient);
+        $endpoint = new Webhooks($this->apiClient);
         $webhook = $endpoint->create(['active' => false]);
 
-        $this->assertInstanceOf(\PayPro\Entities\Webhook::class, $webhook);
+        $this->assertInstanceOf(Webhook::class, $webhook);
     }
 }

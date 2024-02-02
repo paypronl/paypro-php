@@ -2,6 +2,8 @@
 
 namespace PayPro\Operations;
 
+use PayPro\Exception\ApiErrorException;
+
 /**
  * Implements the list endpoint for resources. Should only used by Endpoint classes.
  */
@@ -12,9 +14,9 @@ trait Create
      *
      * @param array $body
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
-     *
      * @return static the created resource
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function create($body)
     {

@@ -13,7 +13,18 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     protected $ppCode;
 
     /**
-     * Create a new instance of an ApiErrorException
+     * Returns the string representation of the exception.
+     */
+    public function __toString()
+    {
+        $parentString = parent::__toString();
+        $statusString = ($this->getHttpStatus()) ? '' : "Status {$this->getHttpStatus()}";
+
+        return "Error sending request to PayPro: {$statusString}{$this->getMessage()}\n{$parentString}";
+    }
+
+    /**
+     * Create a new instance of an ApiErrorException.
      *
      * @param string $message the exception message
      * @param null|int $httpStatus the HTTP status code
@@ -30,14 +41,14 @@ class ApiErrorException extends \Exception implements ExceptionInterface
         $httpHeaders = null,
         $ppCode = null
     ) {
-
         $instance = new static($message);
         $instance->setHttpStatus($httpStatus);
+
         return $instance;
     }
 
     /**
-     * Sets the HTTP status
+     * Sets the HTTP status.
      *
      * @param null|int $httpStatus
      */
@@ -47,7 +58,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Get the HTTP status
+     * Get the HTTP status.
      *
      * @return null|int
      */
@@ -57,7 +68,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Sets the HTTP body
+     * Sets the HTTP body.
      *
      * @param null|string $httpBody
      */
@@ -67,7 +78,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Get the HTTP body
+     * Get the HTTP body.
      *
      * @return null|string
      */
@@ -77,7 +88,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Sets the HTTP headers
+     * Sets the HTTP headers.
      *
      * @param null|array $httpHeaders
      */
@@ -87,7 +98,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Get the HTTP headers
+     * Get the HTTP headers.
      *
      * @return null|array
      */
@@ -97,7 +108,7 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Sets the PayPro error code
+     * Sets the PayPro error code.
      *
      * @param null|string $ppCode
      */
@@ -107,23 +118,12 @@ class ApiErrorException extends \Exception implements ExceptionInterface
     }
 
     /**
-     * Get the PayPro error code
+     * Get the PayPro error code.
      *
      * @return null|string
      */
     public function getPpCode()
     {
         return $this->ppCode;
-    }
-
-    /**
-     * Returns the string representation of the exception
-     */
-    public function __toString()
-    {
-        $parentString = parent::__toString();
-        $statusString = ($this->getHttpStatus()) ? '' : "Status {$this->getHttpStatus()}";
-
-        return "Error sending request to PayPro: {$statusString}{$this->getMessage()}\n{$parentString}";
     }
 }

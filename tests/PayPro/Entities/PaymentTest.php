@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
-final class PaymentTest extends \PayPro\TestCase
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class PaymentTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testCancel()
     {
@@ -20,10 +23,10 @@ final class PaymentTest extends \PayPro\TestCase
             $response
         );
 
-        $payment = new \PayPro\Entities\Payment($data, $this->apiClient);
+        $payment = new Payment($data, $this->apiClient);
 
         $responsePayment = $payment->cancel();
-        $this->assertInstanceOf(\PayPro\Entities\Payment::class, $responsePayment);
+        $this->assertInstanceOf(Payment::class, $responsePayment);
     }
 
     public function testRefund()
@@ -41,10 +44,10 @@ final class PaymentTest extends \PayPro\TestCase
             201
         );
 
-        $payment = new \PayPro\Entities\Payment($data, $this->apiClient);
+        $payment = new Payment($data, $this->apiClient);
 
         $refund = $payment->refund(['amount' => 5000]);
-        $this->assertInstanceOf(\PayPro\Entities\Refund::class, $refund);
+        $this->assertInstanceOf(Refund::class, $refund);
     }
 
     public function testRefunds()
@@ -61,11 +64,11 @@ final class PaymentTest extends \PayPro\TestCase
             $response
         );
 
-        $payment = new \PayPro\Entities\Payment($data, $this->apiClient);
+        $payment = new Payment($data, $this->apiClient);
 
         $refunds = $payment->refunds();
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $refunds);
-        $this->assertInstanceOf(\PayPro\Entities\Refund::class, $refunds->first());
+        $this->assertInstanceOf(Collection::class, $refunds);
+        $this->assertInstanceOf(Refund::class, $refunds->first());
     }
 
     public function testChargebacks()
@@ -82,10 +85,10 @@ final class PaymentTest extends \PayPro\TestCase
             $response
         );
 
-        $payment = new \PayPro\Entities\Payment($data, $this->apiClient);
+        $payment = new Payment($data, $this->apiClient);
 
         $chargebacks = $payment->chargebacks();
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $chargebacks);
-        $this->assertInstanceOf(\PayPro\Entities\Chargeback::class, $chargebacks->first());
+        $this->assertInstanceOf(Collection::class, $chargebacks);
+        $this->assertInstanceOf(Chargeback::class, $chargebacks->first());
     }
 }

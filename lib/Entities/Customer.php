@@ -2,11 +2,15 @@
 
 namespace PayPro\Entities;
 
+use PayPro\Operations\Delete;
+use PayPro\Operations\Request;
+use PayPro\Operations\Update;
+
 class Customer extends Resource
 {
-    use \PayPro\Operations\Delete;
-    use \PayPro\Operations\Request;
-    use \PayPro\Operations\Update;
+    use Delete;
+    use Request;
+    use Update;
 
     public function resourcePath()
     {

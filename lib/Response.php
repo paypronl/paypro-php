@@ -20,23 +20,24 @@ class Response
     private $headers;
 
     /**
-     * Construct a new instance of the Response
+     * Construct a new instance of the Response.
      *
      * @param string $body the response body
      * @param int $status the response status code
      * @param array $headers the response headers
      *
-     * @throws Exception\ApiErrorException when the response body is invalid JSON
-     *
      * @return static
+     *
+     * @throws Exception\ApiErrorException when the response body is invalid JSON
      */
     public function __construct($body, $status, $headers)
     {
         $jsonBody = \json_decode($body, true);
         $jsonError = \json_last_error();
 
-        if ($jsonBody === null && \JSON_ERROR_NONE !== $jsonError) {
+        if (null === $jsonBody && \JSON_ERROR_NONE !== $jsonError) {
             $message = 'Invalid response from API. The JSON returned in the body is not valid.';
+
             throw new Exception\ApiErrorException($message);
         }
 
@@ -51,9 +52,8 @@ class Response
         $this->headers = $headers;
     }
 
-
     /**
-     * Get the parsed body as an array
+     * Get the parsed body as an array.
      *
      * @return array
      */
@@ -63,7 +63,7 @@ class Response
     }
 
     /**
-     * Get the raw body
+     * Get the raw body.
      *
      * @return string
      */
@@ -73,7 +73,7 @@ class Response
     }
 
     /**
-     * Get the HTTP status code
+     * Get the HTTP status code.
      *
      * @return int
      */
@@ -83,7 +83,7 @@ class Response
     }
 
     /**
-     * Get the request id send by the API
+     * Get the request id send by the API.
      *
      * @return null|string
      */
@@ -93,7 +93,7 @@ class Response
     }
 
     /**
-     * Get the headers
+     * Get the headers.
      *
      * @return array
      */

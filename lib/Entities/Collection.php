@@ -2,6 +2,9 @@
 
 namespace PayPro\Entities;
 
+use PayPro\Exception\ApiErrorException;
+use PayPro\Operations\Request;
+
 /**
  * Class Collection.
  *
@@ -12,13 +15,13 @@ namespace PayPro\Entities;
  */
 class Collection extends AbstractEntity implements \Countable, \IteratorAggregate
 {
-    use \PayPro\Operations\Request;
+    use Request;
 
     /** @var array */
     private $filters = [];
 
     /**
-     * Sets the filters
+     * Sets the filters.
      *
      * @param array $filters
      */
@@ -28,7 +31,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
     }
 
     /**
-     * Gets the filters
+     * Gets the filters.
      *
      * @return array
      */
@@ -56,65 +59,65 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
     }
 
     /**
-     * Returns the next page in the resource list if possible
+     * Returns the next page in the resource list if possible.
      *
      * @param array $params
      *
-     * @throws \PayPro\Exception\ApiErrorException if the api call fails
-     *
      * @return \PayPro\Entities\Collection<\PayPro\Entities\AbstractEntity>
+     *
+     * @throws ApiErrorException if the api call fails
      */
     public function next($params = [])
     {
-        if ($this->nextLink() === null) {
+        if (null === $this->nextLink()) {
             return new self(['data' => []]);
-        } else {
-            $params = array_merge($this->filters, $params, ['cursor' => $this->nextCursorId()]);
-            return $this->apiRequest('get', $this->nextUri()['path'], $params);
         }
+        $params = array_merge($this->filters, $params, ['cursor' => $this->nextCursorId()]);
+
+        return $this->apiRequest('get', $this->nextUri()['path'], $params);
     }
 
     /**
-     * Returns the previous page in the resource list if possible
+     * Returns the previous page in the resource list if possible.
      *
      * @param array $params
      *
-     * @throws \PayPro\Exception\ApiErrorException if the api call fails
-     *
      * @return \PayPro\Entities\Collection<\PayPro\Entities\AbstractEntity>
+     *
+     * @throws ApiErrorException if the api call fails
      */
     public function previous($params = [])
     {
-        if ($this->previousLink() === null) {
+        if (null === $this->previousLink()) {
             return new self(['data' => []]);
-        } else {
-            $params = array_merge($this->filters, $params, ['cursor' => $this->previousCursorId()]);
-            return $this->apiRequest('get', $this->previousUri()['path'], $params);
         }
+        $params = array_merge($this->filters, $params, ['cursor' => $this->previousCursorId()]);
+
+        return $this->apiRequest('get', $this->previousUri()['path'], $params);
     }
 
     /**
-     * Returns the first entry of the list
+     * Returns the first entry of the list.
      *
      * @return null|mixed
      */
     public function first()
     {
-        return $this->count() !== 0 ? $this->data[0] : null;
+        return 0 !== $this->count() ? $this->data[0] : null;
     }
 
     /**
-     * Returns the last entry of the list
+     * Returns the last entry of the list.
      *
      * @return null|mixed
      */
     public function last()
     {
-        return $this->count() !== 0 ? $this->data[$this->count() - 1] : null;
+        return 0 !== $this->count() ? $this->data[$this->count() - 1] : null;
     }
 
     /**
-     * Returns the next link of this list
+     * Returns the next link of this list.
      *
      * @return null|string
      */
@@ -122,42 +125,42 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
     {
         if (\array_key_exists('next', $this->links)) {
             return $this->links['next'];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
-     * Returns the uri parts of the next link
+     * Returns the uri parts of the next link.
      *
      * @return null|array
      */
     private function nextUri()
     {
-        if ($this->nextLink() === null) {
+        if (null === $this->nextLink()) {
             return null;
-        } else {
-            return \parse_url($this->nextLink());
         }
+
+        return \parse_url($this->nextLink());
     }
 
     /**
-     * Returns the cursor id of the next link
+     * Returns the cursor id of the next link.
      *
      * @return null|string
      */
     private function nextCursorId()
     {
-        if ($this->nextUri() === null) {
+        if (null === $this->nextUri()) {
             return null;
-        } else {
-            \parse_str($this->nextUri()['query'], $output);
-            return $output['cursor'];
         }
+        \parse_str($this->nextUri()['query'], $output);
+
+        return $output['cursor'];
     }
 
     /**
-     * Returns the previous link of this list
+     * Returns the previous link of this list.
      *
      * @return null|string
      */
@@ -165,37 +168,37 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
     {
         if (\array_key_exists('prev', $this->links)) {
             return $this->links['prev'];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
-     * Returns the uri parts of the previous link
+     * Returns the uri parts of the previous link.
      *
      * @return null|array
      */
     private function previousUri()
     {
-        if ($this->previousLink() === null) {
+        if (null === $this->previousLink()) {
             return null;
-        } else {
-            return \parse_url($this->previousLink());
         }
+
+        return \parse_url($this->previousLink());
     }
 
     /**
-     * Returns the cursor id of the previous link
+     * Returns the cursor id of the previous link.
      *
      * @return null|string
      */
     private function previousCursorId()
     {
-        if ($this->previousUri() === null) {
+        if (null === $this->previousUri()) {
             return null;
-        } else {
-            \parse_str($this->previousUri()['query'], $output);
-            return $output['cursor'];
         }
+        \parse_str($this->previousUri()['query'], $output);
+
+        return $output['cursor'];
     }
 }

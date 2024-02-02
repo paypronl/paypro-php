@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
-final class CustomerTest extends \PayPro\TestCase
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class CustomerTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testDelete()
     {
@@ -20,10 +23,10 @@ final class CustomerTest extends \PayPro\TestCase
             $response
         );
 
-        $customer = new \PayPro\Entities\Customer($data, $this->apiClient);
+        $customer = new Customer($data, $this->apiClient);
 
         $responseCustomer = $customer->delete();
-        $this->assertInstanceOf(\PayPro\Entities\Customer::class, $responseCustomer);
+        $this->assertInstanceOf(Customer::class, $responseCustomer);
     }
 
     public function testUpdate()
@@ -40,9 +43,9 @@ final class CustomerTest extends \PayPro\TestCase
             $response
         );
 
-        $customer = new \PayPro\Entities\Customer($data, $this->apiClient);
+        $customer = new Customer($data, $this->apiClient);
 
         $responseCustomer = $customer->update(['address' => 'Gangpad 11']);
-        $this->assertInstanceOf(\PayPro\Entities\Customer::class, $responseCustomer);
+        $this->assertInstanceOf(Customer::class, $responseCustomer);
     }
 }

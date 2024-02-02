@@ -2,12 +2,17 @@
 
 namespace PayPro\Endpoints;
 
+use PayPro\Operations\Collection;
+use PayPro\Operations\Create;
+use PayPro\Operations\Get;
+use PayPro\Operations\Update;
+
 class Webhooks extends AbstractEndpoint
 {
-    use \PayPro\Operations\Collection;
-    use \PayPro\Operations\Create;
-    use \PayPro\Operations\Get;
-    use \PayPro\Operations\Update;
+    use Collection;
+    use Create;
+    use Get;
+    use Update;
 
     public function resourcePath()
     {

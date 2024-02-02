@@ -8,7 +8,7 @@ namespace PayPro\Entities;
 abstract class Resource extends AbstractEntity
 {
     /**
-     * Returns the URL of this specific resource
+     * Returns the URL of this specific resource.
      *
      * @return string
      */
@@ -18,7 +18,7 @@ abstract class Resource extends AbstractEntity
     }
 
     /**
-     * Returns the path of this specific resource
+     * Returns the path of this specific resource.
      *
      * @return string
      */

@@ -2,9 +2,14 @@
 
 namespace PayPro\Endpoints;
 
-final class ChargebacksTest extends \PayPro\TestCase
+use PayPro\Entities\Chargeback;
+use PayPro\Entities\Collection;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class ChargebacksTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +24,11 @@ final class ChargebacksTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Chargebacks($this->apiClient);
+        $endpoint = new Chargebacks($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Chargeback::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Chargeback::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,10 +44,10 @@ final class ChargebacksTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Chargebacks($this->apiClient);
+        $endpoint = new Chargebacks($this->apiClient);
         $chargeback = $endpoint->get('PCV4U1P3UZTQPU');
 
-        $this->assertInstanceOf(\PayPro\Entities\Chargeback::class, $chargeback);
+        $this->assertInstanceOf(Chargeback::class, $chargeback);
         $this->assertSame($chargeback->id, 'PCV4U1P3UZTQPU');
         $this->assertSame($chargeback->reason, 'MD06');
     }

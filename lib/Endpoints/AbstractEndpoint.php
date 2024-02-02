@@ -2,17 +2,18 @@
 
 namespace PayPro\Endpoints;
 
-use PayPro\Util;
+use PayPro\ApiClient;
+use PayPro\Operations\Request;
 
 abstract class AbstractEndpoint
 {
-    use \PayPro\Operations\Request;
+    use Request;
 
-    /** @var \PayPro\ApiClient $client the client to do requests */
+    /** @var ApiClient the client to do requests */
     protected $client;
 
     /**
-     * Construct a new instance of an Operations by setting the data returned as attributes of the
+     * Construct a new instance of an Operations by setting the data returned as attributes of the.
      *
      * @param null|\PayPro\ApiClient $client
      *
@@ -24,7 +25,7 @@ abstract class AbstractEndpoint
     }
 
     /**
-     * Gets the client
+     * Gets the client.
      *
      * @return null|\PayPro\ApiClient
      */
@@ -34,7 +35,7 @@ abstract class AbstractEndpoint
     }
 
     /**
-     * Returns the URL of this specific endpoint
+     * Returns the URL of this specific endpoint.
      *
      * @return string
      */
@@ -44,7 +45,7 @@ abstract class AbstractEndpoint
     }
 
     /**
-     * Returns the path of this specific resource
+     * Returns the path of this specific resource.
      *
      * @return string
      */

@@ -2,9 +2,12 @@
 
 namespace PayPro\Entities;
 
+use PayPro\Exception\ApiErrorException;
+use PayPro\Operations\Request;
+
 class Payment extends Resource
 {
-    use \PayPro\Operations\Request;
+    use Request;
 
     public function resourcePath()
     {
@@ -12,11 +15,11 @@ class Payment extends Resource
     }
 
     /**
-     * Cancels the payment
-     *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * Cancels the payment.
      *
      * @return static the canceled payment
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function cancel()
     {
@@ -24,45 +27,50 @@ class Payment extends Resource
     }
 
     /**
-     * Creates a refund object for the payment
+     * Creates a refund object for the payment.
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * @param mixed $body
      *
-     * @return \PayPro\Entities\Refund the created refund
+     * @return Refund the created refund
+     *
+     * @throws ApiErrorException if the request fails
      */
     public function refund($body)
     {
         $url = $this->resourceUrl() . '/refunds';
+
         return $this->apiRequest('post', $url, [], [], $body);
     }
 
     /**
-     * Returns all refunds for this payment
+     * Returns all refunds for this payment.
      *
      * @param array $params
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * @return Collection a list with the refunds
      *
-     * @return \PayPro\Entities\Collection a list with the refunds
+     * @throws ApiErrorException if the request fails
      */
     public function refunds($params = [])
     {
         $url = $this->resourceUrl() . '/refunds';
+
         return $this->apiRequest('get', $url, $params);
     }
 
     /**
-     * Returns all chargebacks for this payment
+     * Returns all chargebacks for this payment.
      *
      * @param array $params
      *
-     * @throws \PayPro\Exception\ApiErrorException if the request fails
+     * @return Collection a list with the chargebacks
      *
-     * @return \PayPro\Entities\Collection a list with the chargebacks
+     * @throws ApiErrorException if the request fails
      */
     public function chargebacks($params = [])
     {
         $url = $this->resourceUrl() . '/chargebacks';
+
         return $this->apiRequest('get', $url, $params);
     }
 }

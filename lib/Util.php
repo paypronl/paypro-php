@@ -2,6 +2,8 @@
 
 namespace PayPro;
 
+use PayPro\Entities\Collection;
+
 abstract class Util
 {
     /**
@@ -16,12 +18,12 @@ abstract class Util
     {
         $parts = \explode('_', $type);
 
-        $className = \implode(\array_map(function($part) {
+        $className = \implode(\array_map(function ($part) {
             return \ucfirst(\strtolower($part));
         }, $parts));
 
         // List is a reserved keyword so change to Collection
-        if ($className === 'List') {
+        if ('List' === $className) {
             $className = 'Collection';
         }
 
@@ -29,9 +31,9 @@ abstract class Util
 
         if (\class_exists($fullClassName)) {
             return $fullClassName;
-        } else {
-            return '\PayPro\Entities\Entity';
         }
+
+        return '\PayPro\Entities\Entity';
     }
 
     /**
@@ -71,7 +73,7 @@ abstract class Util
     public static function toEntity($data, $client, $params = [])
     {
         if (self::isList($data)) {
-            return array_map(function($i) use ($client) {
+            return array_map(function ($i) use ($client) {
                 return self::toEntity($i, $client);
             }, $data);
         } elseif (\is_array($data)) {
@@ -79,18 +81,17 @@ abstract class Util
                 $entityClass = self::entityClass($data['type']);
                 $entity = new $entityClass($data, $client);
 
-                if ($entity instanceof \PayPro\Entities\Collection) {
+                if ($entity instanceof Collection) {
                     $entity->setFilters($params);
                 }
 
                 return $entity;
-            } else {
-                foreach ($data as $key => $value) {
-                    $data[$key] = self::toEntity($value, $client);
-                }
-
-                return $data;
             }
+            foreach ($data as $key => $value) {
+                $data[$key] = self::toEntity($value, $client);
+            }
+
+            return $data;
         } else {
             return $data;
         }
@@ -111,7 +112,7 @@ abstract class Util
             return false;
         }
 
-        return $array === [] || (\array_keys($array) === \range(0, \count($array) - 1));
+        return [] === $array || (\array_keys($array) === \range(0, \count($array) - 1));
     }
 
     /**

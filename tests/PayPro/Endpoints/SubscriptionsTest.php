@@ -2,9 +2,14 @@
 
 namespace PayPro\Endpoints;
 
-final class SubscriptionsTest extends \PayPro\TestCase
+use PayPro\Entities\Collection;
+use PayPro\Entities\Subscription;
+use PayPro\TestCase;
+use PayPro\TestHelper;
+
+final class SubscriptionsTest extends TestCase
 {
-    use \PayPro\TestHelper;
+    use TestHelper;
 
     public function testIsListable()
     {
@@ -19,11 +24,11 @@ final class SubscriptionsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Subscriptions($this->apiClient);
+        $endpoint = new Subscriptions($this->apiClient);
         $list = $endpoint->list();
 
-        $this->assertInstanceOf(\PayPro\Entities\Collection::class, $list);
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $list->first());
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertInstanceOf(Subscription::class, $list->first());
     }
 
     public function testIsGettable()
@@ -39,10 +44,10 @@ final class SubscriptionsTest extends \PayPro\TestCase
             $response
         );
 
-        $endpoint = new \PayPro\Endpoints\Subscriptions($this->apiClient);
+        $endpoint = new Subscriptions($this->apiClient);
         $subscription = $endpoint->get('PS8PTGUPZTSLBP');
 
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $subscription);
+        $this->assertInstanceOf(Subscription::class, $subscription);
         $this->assertSame($subscription->id, 'PS8PTGUPZTSLBP');
         $this->assertSame($subscription->description, 'Unlimited Subscription');
         $this->assertSame($subscription->period, ['amount' => 2500, 'interval' => 'month', 'multiplier' => 1, 'vat' => 21.0]);
@@ -62,9 +67,9 @@ final class SubscriptionsTest extends \PayPro\TestCase
             201
         );
 
-        $endpoint = new \PayPro\Endpoints\Subscriptions($this->apiClient);
+        $endpoint = new Subscriptions($this->apiClient);
         $subscription = $endpoint->create(['description' => 'Unlimited Subscription']);
 
-        $this->assertInstanceOf(\PayPro\Entities\Subscription::class, $subscription);
+        $this->assertInstanceOf(Subscription::class, $subscription);
     }
 }

@@ -61,7 +61,7 @@ jobs:
 
       # Remove dev dependencies that are not compatible with lower PHP versions we still support
       - name: Remove incompatible dev dependencies
-        run composer remove --dev --no-update friendsofphp/php-cs-fixer phpstan/phpstan
+        run: composer remove --dev --no-update friendsofphp/php-cs-fixer phpstan/phpstan
 
       - name: Validate composer.json
         run: composer validate

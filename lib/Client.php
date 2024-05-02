@@ -5,6 +5,8 @@ namespace PayPro;
 use PayPro\Endpoints\Chargebacks;
 use PayPro\Endpoints\Customers;
 use PayPro\Endpoints\Events;
+use PayPro\Endpoints\InstallmentPlanPeriods;
+use PayPro\Endpoints\InstallmentPlans;
 use PayPro\Endpoints\Mandates;
 use PayPro\Endpoints\Payments;
 use PayPro\Endpoints\Refunds;
@@ -29,6 +31,12 @@ class Client
 
     /** @var Customers */
     public $customers;
+
+    /** @var InstallmentPlanPeriods */
+    public $installmentPlanPeriods;
+
+    /** @var InstallmentPlans */
+    public $installmentPlans;
 
     /** @var Events */
     public $events;
@@ -90,6 +98,8 @@ class Client
     {
         $this->chargebacks = new Chargebacks($this->apiClient);
         $this->customers = new Customers($this->apiClient);
+        $this->installmentPlanPeriods = new InstallmentPlanPeriods($this->apiClient);
+        $this->installmentPlans = new InstallmentPlans($this->apiClient);
         $this->events = new Events($this->apiClient);
         $this->mandates = new Mandates($this->apiClient);
         $this->payments = new Payments($this->apiClient);

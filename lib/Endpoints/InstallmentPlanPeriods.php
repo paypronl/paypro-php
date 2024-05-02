@@ -4,12 +4,12 @@ namespace PayPro\Endpoints;
 
 use PayPro\Operations\Get;
 
-class SubscriptionPeriods extends AbstractEndpoint
+class InstallmentPlanPeriods extends AbstractEndpoint
 {
     use Get;
 
     public function resourcePath()
     {
-        return 'subscription_periods';
+        return 'installment_plan_periods';
     }
 }

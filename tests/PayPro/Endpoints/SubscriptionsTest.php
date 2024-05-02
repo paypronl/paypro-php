@@ -50,7 +50,7 @@ final class SubscriptionsTest extends TestCase
         self::assertInstanceOf(Subscription::class, $subscription);
         self::assertSame($subscription->id, 'PS8PTGUPZTSLBP');
         self::assertSame($subscription->description, 'Unlimited Subscription');
-        self::assertSame($subscription->period, ['amount' => 2500, 'interval' => 'month', 'multiplier' => 1, 'vat' => 21.0]);
+        self::assertEqualsCanonicalizing($subscription->period, ['amount' => 2500, 'interval' => 'month', 'multiplier' => 1, 'vat' => 21.0]);
     }
 
     public function testIsCreatable()

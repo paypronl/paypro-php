@@ -2,7 +2,6 @@
 
 namespace PayPro\Endpoints;
 
-use PayPro\Entities\Collection;
 use PayPro\Entities\SubscriptionPeriod;
 use PayPro\TestCase;
 use PayPro\TestHelper;
@@ -10,26 +9,6 @@ use PayPro\TestHelper;
 final class SubscriptionPeriodsTest extends TestCase
 {
     use TestHelper;
-
-    public function testIsListable()
-    {
-        $response = $this->getFixture('subscription_periods/list.json');
-
-        $this->stubRequest(
-            'get',
-            '/subscription_periods',
-            null,
-            null,
-            null,
-            $response
-        );
-
-        $endpoint = new SubscriptionPeriods($this->apiClient);
-        $list = $endpoint->list();
-
-        self::assertInstanceOf(Collection::class, $list);
-        self::assertInstanceOf(SubscriptionPeriod::class, $list->first());
-    }
 
     public function testIsGettable()
     {

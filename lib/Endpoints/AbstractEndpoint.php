@@ -15,7 +15,7 @@ abstract class AbstractEndpoint
     /**
      * Construct a new instance of an Operations by setting the data returned as attributes of the.
      *
-     * @param null|\PayPro\ApiClient $client
+     * @param null|ApiClient $client
      *
      * @return static
      */
@@ -27,7 +27,7 @@ abstract class AbstractEndpoint
     /**
      * Gets the client.
      *
-     * @return null|\PayPro\ApiClient
+     * @return null|ApiClient
      */
     public function getClient()
     {

@@ -1,0 +1,12 @@
+{
+  "id": "MD6ULYXJ4HP9RJ",
+  "type": "mandate",
+  "state": "approved",
+  "customer": "CUWSWVVPTL94VX",
+  "pay_method": "direct-debit",
+  "created_at": "2024-03-11T16:59:06Z",
+  "_links": {
+    "self": "http://api.paypro.test:3000/mandates/MD6ULYXJ4HP9RJ",
+    "customer": "http://api.paypro.test:3000/customers/CUWSWVVPTL94VX"
+  }
+}

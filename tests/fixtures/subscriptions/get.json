@@ -18,10 +18,13 @@
   },
   "scheduling": "automatic",
   "start_at": null,
+  "cancel_at": null,
+  "mandate": "MD6ULYXJ4HP9RJ",
   "state": "active",
   "subscription_type": "direct_debit",
   "_links": {
     "self": "https://api.paypro.nl/subscriptions/PS8PTGUPZTSLBP",
-    "customer": "https://api.paypro.nl/customers/CU6SRHQEFWD18A"
+    "customer": "https://api.paypro.nl/customers/CU6SRHQEFWD18A",
+    "mandate": "https://api.paypro.nl/mandates/MD6ULYXJ4HP9RJ"
   }
 }

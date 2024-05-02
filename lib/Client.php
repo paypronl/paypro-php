@@ -9,6 +9,7 @@ use PayPro\Endpoints\InstallmentPlanPeriods;
 use PayPro\Endpoints\InstallmentPlans;
 use PayPro\Endpoints\Mandates;
 use PayPro\Endpoints\Payments;
+use PayPro\Endpoints\PayMethods;
 use PayPro\Endpoints\Refunds;
 use PayPro\Endpoints\SubscriptionPeriods;
 use PayPro\Endpoints\Subscriptions;
@@ -46,6 +47,9 @@ class Client
 
     /** @var Payments */
     public $payments;
+
+    /** @var PayMethods */
+    public $pay_methods;
 
     /** @var Refunds */
     public $refunds;
@@ -103,6 +107,7 @@ class Client
         $this->events = new Events($this->apiClient);
         $this->mandates = new Mandates($this->apiClient);
         $this->payments = new Payments($this->apiClient);
+        $this->pay_methods = new PayMethods($this->apiClient);
         $this->refunds = new Refunds($this->apiClient);
         $this->subscriptionPeriods = new SubscriptionPeriods($this->apiClient);
         $this->subscriptions = new Subscriptions($this->apiClient);

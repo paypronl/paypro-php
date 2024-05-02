@@ -5,6 +5,7 @@ namespace PayPro;
 use PayPro\Endpoints\Chargebacks;
 use PayPro\Endpoints\Customers;
 use PayPro\Endpoints\Events;
+use PayPro\Endpoints\InstallmentPlanPeriods;
 use PayPro\Endpoints\Mandates;
 use PayPro\Endpoints\Payments;
 use PayPro\Endpoints\Refunds;
@@ -64,6 +65,7 @@ final class ClientTest extends TestCase
         self::assertInstanceOf(Chargebacks::class, $client->chargebacks);
         self::assertInstanceOf(Customers::class, $client->customers);
         self::assertInstanceOf(Events::class, $client->events);
+        self::assertInstanceOf(InstallmentPlanPeriods::class, $client->installmentPlanPeriods);
         self::assertInstanceOf(Mandates::class, $client->mandates);
         self::assertInstanceOf(Payments::class, $client->payments);
         self::assertInstanceOf(Refunds::class, $client->refunds);

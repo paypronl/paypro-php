@@ -5,7 +5,6 @@ namespace PayPro\Entities;
 use PayPro\Exception\ApiErrorException;
 use PayPro\Operations\Request;
 
-
 class SubscriptionPeriod extends Resource
 {
     use Request;

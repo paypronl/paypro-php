@@ -1,0 +1,36 @@
+{
+  "type": "list",
+  "data": [
+    {
+      "id": "PPATB9E1098EAZ",
+      "type": "payment",
+      "amount": 605,
+      "currency": "EUR",
+      "description": "Test",
+      "pay_method": {
+        "id": "direct-debit",
+        "type": "pay_method",
+        "name": "Direct Debit",
+        "currencies": [
+          "EUR"
+        ],
+        "minimum_amount": 10,
+        "maximum_amount": 5000000,
+        "details": null
+      },
+      "state": "processing",
+      "refunded_amount": 0,
+      "return_url": null,
+      "cancel_url": null,
+      "created_at": "2024-04-25T11:57:05Z",
+      "paid_at": null,
+      "_links": {
+        "self": "http://api.paypro.nl/payments/PPATB9E1098EAZ"
+      }
+    }
+  ],
+  "count": 1,
+  "_links": {
+    "self": "http://api.paypro.nl/subscription_periods/SPCMTC4RJLPNWT/payments"
+  }
+}

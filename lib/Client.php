@@ -49,7 +49,7 @@ class Client
     public $payments;
 
     /** @var PayMethods */
-    public $pay_methods;
+    public $payMethods;
 
     /** @var Refunds */
     public $refunds;
@@ -107,7 +107,7 @@ class Client
         $this->events = new Events($this->apiClient);
         $this->mandates = new Mandates($this->apiClient);
         $this->payments = new Payments($this->apiClient);
-        $this->pay_methods = new PayMethods($this->apiClient);
+        $this->payMethods = new PayMethods($this->apiClient);
         $this->refunds = new Refunds($this->apiClient);
         $this->subscriptionPeriods = new SubscriptionPeriods($this->apiClient);
         $this->subscriptions = new Subscriptions($this->apiClient);

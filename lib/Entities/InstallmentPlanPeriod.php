@@ -5,17 +5,17 @@ namespace PayPro\Entities;
 use PayPro\Exception\ApiErrorException;
 use PayPro\Operations\Request;
 
-class SubscriptionPeriod extends Resource
+class InstallmentPlanPeriod extends Resource
 {
     use Request;
 
     public function resourcePath()
     {
-        return 'subscription_periods';
+        return 'installment_plan_periods';
     }
 
     /**
-     * Returns all payments of the subscription period.
+     * Returns all payments of the installment plan period.
      *
      * @param mixed $params
      *

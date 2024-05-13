@@ -1,0 +1,22 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "IPD344S1PDY8XX",
+      "type": "installment_plan_period",
+      "amount": 1500,
+      "period_number": 1,
+      "installment_plan": "PIUJDW4VCMG9JS",
+      "state": "paid",
+      "created_at": "2023-06-30T12:40:10Z",
+      "_links": {
+        "self": "https://api.paypro.nl/installment_plan_periods/IPD344S1PDY8XX",
+        "installment_plan": "https://api.paypro.nl/installment_plans/PIUJDW4VCMG9JS"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/installment_plan_periods"
+  }
+}

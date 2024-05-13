@@ -18,7 +18,7 @@ abstract class AbstractEntity implements \ArrayAccess
      * entity.
      *
      * @param array $data
-     * @param null|\PayPro\ApiClient $client
+     * @param null|ApiClient $client
      *
      * @return static
      */
@@ -97,7 +97,7 @@ abstract class AbstractEntity implements \ArrayAccess
     /**
      * Gets the client.
      *
-     * @return null|\PayPro\ApiClient
+     * @return null|ApiClient
      */
     public function getClient()
     {

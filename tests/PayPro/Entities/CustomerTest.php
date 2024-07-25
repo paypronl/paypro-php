@@ -48,4 +48,25 @@ final class CustomerTest extends TestCase
         $responseCustomer = $customer->update(['address' => 'Gangpad 11']);
         self::assertInstanceOf(Customer::class, $responseCustomer);
     }
+
+    public function testMandates()
+    {
+        $response = $this->getFixture('customers/mandates.json');
+        $data = json_decode($this->getFixture('customers/get.json'), true);
+
+        $this->stubRequest(
+            'get',
+            '/customers/CU10TV703T84E0/mandates',
+            null,
+            null,
+            null,
+            $response
+        );
+
+        $customer = new Customer($data, $this->apiClient);
+
+        $mandates = $customer->mandates();
+        self::assertInstanceOf(Collection::class, $mandates);
+        self::assertInstanceOf(Mandate::class, $mandates->first());
+    }
 }

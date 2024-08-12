@@ -4,7 +4,7 @@ namespace PayPro;
 
 class PayPro
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '1.1.0';
 
     /** @var string The PayPro API key to authorize your requests */
     public static $apiKey;

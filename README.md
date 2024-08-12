@@ -69,6 +69,14 @@ $customer = $paypro->customers->get('CUSSDGDCJVZH5K');
 
 ```
 
+## Using a different endpoint
+
+To use a different endpoint (default: `https://api.paypro.nl`) you can create the client in the following way:
+
+```php
+$paypro = new \PayPro\Client(['api_url' => 'https://api-test.paypro.nl', 'api_key' => 'pp_...']);
+```
+
 ## Development
 
 If you want to contribute to this project you can fork the repository. Create a new branch, add your feature and create a pull request. We will look at your request and determine if we want to add it.

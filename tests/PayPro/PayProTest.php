@@ -6,6 +6,6 @@ final class PayProTest extends TestCase
 {
     public function testGetVersion()
     {
-        self::assertSame(PayPro::getVersion(), '0.1.0');
+        self::assertSame(PayPro::getVersion(), '1.1.0');
     }
 }

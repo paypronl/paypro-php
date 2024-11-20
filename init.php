@@ -64,6 +64,12 @@ require __DIR__ . '/lib/Entities/Entity.php';
 
 require __DIR__ . '/lib/Entities/Event.php';
 
+require __DIR__ . '/lib/Entities/InstallmentPlan.php';
+
+require __DIR__ . '/lib/Entities/InstallmentPlanPeriod.php';
+
+require __DIR__ . '/lib/Entities/Mandate.php';
+
 require __DIR__ . '/lib/Entities/Payment.php';
 
 require __DIR__ . '/lib/Entities/PayMethod.php';
@@ -85,7 +91,15 @@ require __DIR__ . '/lib/Endpoints/Customers.php';
 
 require __DIR__ . '/lib/Endpoints/Events.php';
 
+require __DIR__ . '/lib/Endpoints/InstallmentPlanPeriods.php';
+
+require __DIR__ . '/lib/Endpoints/InstallmentPlans.php';
+
+require __DIR__ . '/lib/Endpoints/Mandates.php';
+
 require __DIR__ . '/lib/Endpoints/Payments.php';
+
+require __DIR__ . '/lib/Endpoints/PayMethods.php';
 
 require __DIR__ . '/lib/Endpoints/Refunds.php';
 

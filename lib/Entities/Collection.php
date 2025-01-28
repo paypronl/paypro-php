@@ -63,7 +63,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
      *
      * @param array $params
      *
-     * @return \PayPro\Entities\Collection<\PayPro\Entities\AbstractEntity>
+     * @return Collection<AbstractEntity>
      *
      * @throws ApiErrorException if the api call fails
      */
@@ -82,7 +82,7 @@ class Collection extends AbstractEntity implements \Countable, \IteratorAggregat
      *
      * @param array $params
      *
-     * @return \PayPro\Entities\Collection<\PayPro\Entities\AbstractEntity>
+     * @return Collection<AbstractEntity>
      *
      * @throws ApiErrorException if the api call fails
      */

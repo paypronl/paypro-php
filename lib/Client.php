@@ -2,6 +2,7 @@
 
 namespace PayPro;
 
+use PayPro\Endpoints\Balances;
 use PayPro\Endpoints\Chargebacks;
 use PayPro\Endpoints\Customers;
 use PayPro\Endpoints\Events;
@@ -10,9 +11,11 @@ use PayPro\Endpoints\InstallmentPlans;
 use PayPro\Endpoints\Mandates;
 use PayPro\Endpoints\Payments;
 use PayPro\Endpoints\PayMethods;
+use PayPro\Endpoints\Payouts;
 use PayPro\Endpoints\Refunds;
 use PayPro\Endpoints\SubscriptionPeriods;
 use PayPro\Endpoints\Subscriptions;
+use PayPro\Endpoints\TopUps;
 use PayPro\Endpoints\Webhooks;
 use PayPro\Exception\InvalidArgumentException;
 
@@ -26,6 +29,9 @@ class Client
         'api_key' => null,
         'api_url' => self::DEFAULT_API_URL,
     ];
+
+    /** @var Balances */
+    public $balances;
 
     /** @var Chargebacks */
     public $chargebacks;
@@ -51,6 +57,9 @@ class Client
     /** @var PayMethods */
     public $payMethods;
 
+    /** @var Payouts */
+    public $payouts;
+
     /** @var Refunds */
     public $refunds;
 
@@ -59,6 +68,9 @@ class Client
 
     /** @var Subscriptions */
     public $subscriptions;
+
+    /** @var TopUps */
+    public $topUps;
 
     /** @var Webhooks */
     public $webhooks;
@@ -100,6 +112,7 @@ class Client
      */
     private function setupEndpoints()
     {
+        $this->balances = new Balances($this->apiClient);
         $this->chargebacks = new Chargebacks($this->apiClient);
         $this->customers = new Customers($this->apiClient);
         $this->installmentPlanPeriods = new InstallmentPlanPeriods($this->apiClient);
@@ -108,9 +121,11 @@ class Client
         $this->mandates = new Mandates($this->apiClient);
         $this->payments = new Payments($this->apiClient);
         $this->payMethods = new PayMethods($this->apiClient);
+        $this->payouts = new Payouts($this->apiClient);
         $this->refunds = new Refunds($this->apiClient);
         $this->subscriptionPeriods = new SubscriptionPeriods($this->apiClient);
         $this->subscriptions = new Subscriptions($this->apiClient);
+        $this->topUps = new TopUps($this->apiClient);
         $this->webhooks = new Webhooks($this->apiClient);
     }
 

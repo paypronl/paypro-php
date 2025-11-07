@@ -52,6 +52,8 @@ require __DIR__ . '/lib/Operations/Update.php';
 // Entities
 require __DIR__ . '/lib/Entities/AbstractEntity.php';
 
+require __DIR__ . '/lib/Entities/Balance.php';
+
 require __DIR__ . '/lib/Entities/Resource.php';
 
 require __DIR__ . '/lib/Entities/Collection.php';
@@ -74,16 +76,22 @@ require __DIR__ . '/lib/Entities/Payment.php';
 
 require __DIR__ . '/lib/Entities/PayMethod.php';
 
+require __DIR__ . '/lib/Entities/Payout.php';
+
 require __DIR__ . '/lib/Entities/Refund.php';
 
 require __DIR__ . '/lib/Entities/Subscription.php';
 
 require __DIR__ . '/lib/Entities/SubscriptionPeriod.php';
 
+require __DIR__ . '/lib/Entities/TopUp.php';
+
 require __DIR__ . '/lib/Entities/Webhook.php';
 
 // Endpoints
 require __DIR__ . '/lib/Endpoints/AbstractEndpoint.php';
+
+require __DIR__ . '/lib/Endpoints/Balances.php';
 
 require __DIR__ . '/lib/Endpoints/Chargebacks.php';
 
@@ -101,11 +109,15 @@ require __DIR__ . '/lib/Endpoints/Payments.php';
 
 require __DIR__ . '/lib/Endpoints/PayMethods.php';
 
+require __DIR__ . '/lib/Endpoints/Payouts.php';
+
 require __DIR__ . '/lib/Endpoints/Refunds.php';
 
 require __DIR__ . '/lib/Endpoints/Subscriptions.php';
 
 require __DIR__ . '/lib/Endpoints/SubscriptionPeriods.php';
+
+require __DIR__ . '/lib/Endpoints/TopUps.php';
 
 require __DIR__ . '/lib/Endpoints/Webhooks.php';
 
